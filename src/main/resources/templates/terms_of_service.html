@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>Terms of service</title>
+</head>
+<body>
+
+<section th:replace="~{components/section_terms_of_service :: section_terms_of_service}"></section>
+
+</body>
+<script>
+</script>
+</html>

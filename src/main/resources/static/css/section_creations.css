@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+
+section {
+	margin:70px 0 0 0;
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+section .content {
+	width:100%;
+	max-width:600px;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+}
+
+
+

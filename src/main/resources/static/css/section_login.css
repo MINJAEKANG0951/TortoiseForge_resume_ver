@@ -1,0 +1,171 @@
+@charset "UTF-8";
+
+section {
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	position:relative;
+}
+
+section .content {
+	width:100%;
+	max-width:600px;
+	padding:20px;
+}
+
+section .content .navBtns {
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+}
+
+section .content .navBtns .navBtn {
+	width:40px;
+	height:40px;
+	cursor:pointer;
+}
+
+section .content input[name="viewPagerRadio"] {
+	display:none;
+}
+
+section .content .title {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	flex-wrap: wrap;
+	cursor:default;
+	
+	width:100%;
+}
+
+
+section .content .title  .titleImg {
+	width:80px;
+	height:80px;
+}
+
+
+section .content .title .titleText {
+	padding:10px;
+	font-size:30px;
+	font-weight:bold;
+	text-align:center;
+}
+
+@media screen and (max-width:200px) {
+	section .content .title .titleText {
+		font-size:20px;
+	}
+}
+
+
+
+
+
+section .content .viewPager {
+	display:flex;
+	flex-direction:row;
+	flex-wrap:nowrap;
+	width:100%;
+	overflow:hidden;
+	position:relative;
+	
+	height:auto;
+}
+section .content .viewPager .viewPagerPage {
+	flex: 0 0 100%;
+	min-width: 100%;
+	transition:0.3s;
+}
+
+
+section .content .viewPager .viewPagerPage .justViewPageContainer {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	width:100%;
+	padding:30px 10px 10px 10px;
+	gap:20px;
+}
+
+section .content .viewPager .viewPagerPage .justViewPageContainer .smallTitle {
+	width:100%;
+	font-size:20px;
+	line-height:30px;
+	text-align:center;
+}
+
+@media screen and (max-width:230px) {
+	section .content .viewPager .viewPagerPage .justViewPageContainer .smallTitle {
+		font-size:7vw;
+	}
+}
+
+section .content .viewPager .viewPagerPage .justViewPageContainer .inputBox {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:100%;
+	padding:10px;
+}
+
+
+
+section .content .guide {
+	padding:0 10px;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	text-align:center;
+	font-size:14px;
+	line-height:18px;
+	color:red;
+}
+
+
+section .content .buttons {
+	padding:20px 10px;
+	width:100%;
+}
+
+section .content .buttons .viewPagerButton {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:100%;
+	min-height:40px;
+	border:0;
+	border-radius:5px;
+	background-color:#09aa5c;
+	color:white;
+	font-weight:bold;
+	cursor:pointer;
+	transition:0.3s;
+}
+section .content .buttons .viewPagerButton:hover {
+	background-color:green;
+}
+
+
+
+section .content .aboutAccount {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:100%;
+	column-gap:15px;
+	
+	font-size:12px;
+	color:gray;
+}
+section .content .aboutAccount a {
+	color:gray;
+}
+
+
+
+

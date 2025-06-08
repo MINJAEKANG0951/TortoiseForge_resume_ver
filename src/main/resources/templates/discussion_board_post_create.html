@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>Create Post</title>
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/dialog.css">
+<link rel="stylesheet" href="/css/header_post_create.css">
+<link rel="stylesheet" href="/css/section_discussion_board_post_create.css">
+<link rel="stylesheet" href="/css/footer.css">
+
+</head>
+<body>
+
+<div th:replace="~{components/dialog :: dialog}"></div>
+<header th:replace="~{components/header_post_create :: header_post_create}"></header>
+<section th:replace="~{components/section_discussion_board_post_create :: section_discussion_board_post_create}"></section>
+<footer th:replace="~{components/footer :: footer}"></footer>
+
+
+</body>
+<!--  
+	<script src="https://www.google.com/recaptcha/api.js?render=6LdJeecpAAAAAM0E_TKry6FQ6HwSKoEp8etPz7Ct"></script>
+	recaptcha 는 인증서도 사야하고 도메인도 적용하고 해야하니까 나중에 하는걸로 ㄱ. 코드만 잘 분기처리 해 놓으셈 바로 쓸 수 있게 
+-->
+
+
+<script src="/js/dialog.js"></script>
+<script src="/js/header_post_create.js"></script>
+<script src="/js/section_discussion_board_post_create.js"></script>
+<script src="/js/footer.js"></script>
+
+<script>
+</script>
+</html>

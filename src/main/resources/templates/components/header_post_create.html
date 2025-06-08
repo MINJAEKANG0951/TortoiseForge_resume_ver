@@ -1,0 +1,98 @@
+<header th:fragment="header_post_create" id="headerContainer">
+
+	<input type="checkbox" name="menuVeiw" id="showMenu"/>
+	
+	<div id='header'>
+		<img id='logo' src='/img/original/arrow_back.png'/>
+		
+		<div id='title'>
+			<img 
+				id='titleImg' 
+				th:src="${postSeq == null} ? '/img/original/title_createPost.png' : '/img/original/title_modifyPost.png/'"/>
+			<span th:text="${isUpdateMode} ? 'MODIFY POST' : 'CREATE POST' "></span>	
+		</div>
+		
+		<label id="hamburger" for="showMenu">&#9776;</label>
+	</div>
+	
+	<div id='sidebar'>
+	
+		<div id='sidebarTitle'>
+			<img id='sidebarLogo' src='/img/original/pencil.png'/>
+			<label id='foldSideBar' for='showMenu'>&times;</label>
+		</div>
+		
+		<div id='sidebarStatus'>
+			POST CREATION TOOL
+		</div>
+		
+		<div id='userStatus' th:text="'Logged in as ' + ${session.username}"></div>
+		
+		<div id='sidebarContent'>
+		
+			<div class='activities'>
+				<div id="postPreview" class='activity'>
+					<div class="contentImgAndName">
+						<img src='/img/original/preview.png'/>
+						<span>PREVIEW</span>
+					</div>
+					<span></span>
+				</div>
+			</div>
+		
+			<div class='activities'>
+			
+				<div id="addTextBox" 		class='activity'>
+					<div class="contentImgAndName">
+						<img src='/img/original/textBox.png'/>
+						<span class="activityName">ADD TEXT BOX</span>
+					</div>
+					<span 
+						id="currentTextContentNum" 
+						class="contentMax"
+						th:text="|0/${maxTextContentNumber}|">
+					
+					</span>
+				</div>
+				
+				<div id="addBoldTextBox" 	class='activity'>
+					<div class="contentImgAndName">
+						<img src='/img/original/textBoxBold.png'/>
+						<span class="activityName">ADD TEXT BOX (bold text)</span>
+					</div>
+					<span 
+						id="currentBoldTextContentNum" 
+						class="contentMax"
+						th:text="|0/${maxBoldTextContentNumber}|">
+					</span>
+				</div>
+				
+				<div id="addImage" 			class='activity'>
+					<div class="contentImgAndName">
+						<img src='/img/original/imageBox.png'/>
+						<span class="activityName">ADD IMAGE</span>
+					</div>
+					<span 
+						id="currentImageContentNum" 
+						class="contentMax"
+						th:text="|0/${maxImageContentNumber}|">
+					</span>
+				</div>
+				
+			</div>
+		
+			<div class='legalInfoGroup'>
+				<span class='legalInfoGroupTitle'>© 2024 THE TORTOISE'S FORGE</span>
+				<div class="legalInfoGroupItems">
+					<a href='/about' class='legalInfoGroupItem'>About</a>
+					<a href='/terms' class='legalInfoGroupItem'>Terms</a>
+					<a href='/privacy' class='legalInfoGroupItem'>Privacy</a>
+				</div>
+			</div>
+			
+		</div>
+	
+	</div>
+	<label id='sidebarBackground' for='showMenu'></label>
+
+</header>

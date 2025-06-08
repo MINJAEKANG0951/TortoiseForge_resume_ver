@@ -1,0 +1,272 @@
+@charset "UTF-8";
+
+   header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        
+        /* border-bottom:1px solid #ddd;
+        background-color:#fff7f7; */
+        
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        width:100%;
+        
+        background-color:white;
+       	border-bottom:1px solid #e8e8e8;
+    }
+    
+    header #userSeq {
+    	display:none;
+    }
+
+	header input[name='menuVeiw'] {
+		display:none;
+	}
+			
+	header #header{
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		width:100%;
+		max-width:600px;			/* THE TORTOISE'S FORGE MAX WIDTH  */
+		height:70px;
+		z-index:1100;
+	}
+	
+	header #hamburger {
+		cursor:pointer;
+		font-size:20px;
+		
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		width:70px;
+		height:70px;
+	}
+	
+	header #logo {
+		width:70px;
+		height:70px;
+		padding:10px;
+		cursor:pointer;
+	}
+	
+	header #title {
+		width:calc( 100% - 140px );
+		display:flex;
+		justify-content:center;
+		align-items:center;
+	}
+	
+	header #title #titleImg {
+		width:90%;
+		max-width:330px;
+	}
+	
+	header #title span {
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		
+		font-weight:bold;
+		font-size:13px;
+		white-space:nowrap;
+		overflow:hidden;
+		text-overflow: ellipsis;
+		
+		cursor:default;
+		display:none;
+	}
+	
+	header #title #titleImg {
+		width:90%;
+		max-width:330px;
+	}
+	
+	@media screen and (max-width:300px)
+	{
+
+		header #title #titleImg {
+			display:none;
+		}
+		
+		header #title span {
+			display:block;
+		}
+		
+	}
+	
+	
+	header #showMenu:checked ~ #sidebar {
+		transform:translateX( 0 );
+		opacity:1;
+	}
+	
+	header #sidebar {
+		position:fixed;
+		top:0;
+		left:0;
+		width:90%;
+		height:100%;
+		transform: translateX( -100% );
+		opacity:0;
+		transition:0.3s;
+		max-width:360px;
+		z-index:1200;
+		border:1px solid #ddd;
+		background-color:white;
+		border-radius:0 20px 20px 0;
+		
+		display:flex;
+		justify-content:left;
+		align-items:top;
+		flex-direction:column;
+		
+		padding:10px;
+	}
+	
+	header #sidebarTitle {
+		display:flex;
+		justify-content:space-between;
+	}
+	
+	header #sidebarLogo {
+			width:70px;
+			height:70px;
+			display:block;
+	}
+	
+	header #sidebarTitle #foldSideBar {
+		display:flex;
+		align-items:center;
+		justify-content:center;
+		cursor:pointer;
+		padding:15px;
+		font-size:30px;
+		width:40px;
+		height:40px;
+	}
+	
+	header #loginStatus {
+		padding:10px 10px;
+		font-size:12px;
+		color:green;
+	}
+	
+	header #sidebarContent {
+		overflow:auto;
+	}
+
+	header #showMenu:checked ~ #sidebarBackground {
+		transform:translateX( 0 );
+	}
+	
+	header #sidebarBackground {
+		top:0;
+		left:0;
+		display:block;
+		position:fixed;
+		width:100%;
+		height:100%;
+		transform:translateX( -100% );
+		background-color: rgba(0, 0, 0, 0.1);
+		z-index:1150;
+	}
+	
+	@media screen and (max-width:140px)
+	{
+		header #sidebar {
+			width:100%;
+			transform:translateY( 100% );
+			border-radius:20px 20px 0 0;
+		}
+		header #showMenu:checked ~ #sidebar {
+			transform:translateY( 0 );
+		}
+		
+	}
+	
+	
+
+	header .activities {
+	    padding: 20px 10px;
+	    display: flex;
+	    flex-direction: column;
+	    font-weight: bold;
+	    font-size: 13px;
+	    color: black;
+	}
+	
+	header .activities:first-child {
+	    border-bottom: none;
+	}
+	
+	header .activities:not(:first-child) {
+	    border-top: 1px solid #ddd;
+	}
+
+	
+	
+	header .activity {
+		cursor:pointer;
+		padding:10px;
+		display:flex;
+		align-items:center;
+		position:relative;
+	}
+	header .activity:hover{
+		background-color: rgb(240, 240, 240);
+	}
+	header .activity img {
+		width:45px;
+		height:45px;
+		margin-right:20px;
+	}
+	
+	header .activity .redDot{
+		width:5px;
+		height:5px;
+		margin:10px;
+		background-color:red;
+		border-radius:50%;
+		
+		position:absolute;
+		left:40px;
+		top:10px;
+		display:none;
+	}
+		
+	@media screen and (max-width:230px)
+	{
+		header .activity img{
+			display:none;
+		}
+		header .activity .redDot{
+			opacity:0;
+		}
+	}
+	
+	header .legalInfoGroup {
+		padding:10px 20px;
+		display:flex;
+		flex-direction:column;
+	}
+	header .legalInfoGroupTitle {
+		font-size:13px;
+		color:gray;
+	}
+	header .legalInfoGroupItems {
+		padding:15px 0;
+		font-size:12px;
+	}
+	header .legalInfoGroupItem {
+		margin-right:10px;
+		margin-bottom:5px;
+		text-decoration:none;
+	}
+	
+	

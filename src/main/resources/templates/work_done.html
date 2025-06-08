@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>Done</title>
+<link rel="stylesheet" href="/css/reset.css">
+</head>
+<style>
+
+section {
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	position:relative;
+	flex-direction:column;
+	padding:30px;
+	row-gap:20px;
+	
+	line-height:20px;
+}
+
+
+#thankYouText {
+
+	font-size:25px;
+	line-height:35px;
+	cursor:default;
+	max-width:400px;
+	text-align:center;
+	
+}
+
+#thankYouTextSmall {
+	text-align:center;
+}
+
+#thankYouImg {
+	cursor:default;
+	max-width:400px;
+	width:100%;
+	border-radius:10px;
+}
+
+#goHomeBtn {
+	cursor:pointer;
+	max-width:400px;
+	width:100%;
+	height:40px;
+	
+	font-size:17px;
+	
+	border:0;
+	border-radius:5px;
+	background-color:#09aa5c;
+	color:white;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	transition:0.3s;
+}
+#goHomeBtn:hover {
+	background-color:#067740;
+}
+
+#goLoginBtn {
+	cursor:pointer;
+	max-width:400px;
+	width:100%;
+	height:40px;
+	
+	font-size:17px;
+	
+	border:0;
+	border-radius:5px;
+	background-color:rgb(145, 145, 255);
+	color:white;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	transition:0.3s;
+}
+#goLoginBtn:hover {
+	background-color:rgb(90, 90, 255);
+}
+
+
+</style>
+<body>
+<section>
+
+	<div id="thankYouText" th:text="${largeText}"></div>
+	<div id="thankYouTextSmall" th:text="${smallText}"></div>
+	<img id="thankYouImg" th:src="@{${imgPath}}">
+	
+	<button th:if="${mode.equals('password')}" id="goHomeBtn" 	onclick="document.location='/'">home</button>
+	<button th:if="${mode.equals('password')}" id="goLoginBtn" 	onclick="document.location='/login'">login</button>
+	
+	<button th:if="${mode.equals('username')}" id="goHomeBtn" 	onclick="document.location='/'">home</button>
+	<button th:if="${mode.equals('username')}" id="goLoginBtn" 	onclick="document.location='/login'">login</button>
+	
+	<button th:if="${mode.equals('signup')}" id="goHomeBtn" 	onclick="document.location='/'">home</button>
+	<button th:if="${mode.equals('signup')}" id="goLoginBtn" 	onclick="document.location='/login'">login</button>
+	
+	<button th:if="${mode.equals('postCreatedButFileUploadFailed')}" id="goHomeBtn" 	onclick="document.location='/discussionBoard'">discussion board</button>
+	<button th:if="${mode.equals('postCreatedButFileUploadFailed')}" id="goLoginBtn" 	onclick="document.location='/'">home</button>
+
+</section>
+</body>
+<script>
+</script>
+</html>

@@ -1,0 +1,270 @@
+<section th:fragment="section_discussion_board_post_read">
+<div class="content">
+	
+	<input 
+		class="modelVariable" 
+		type="number" 
+		id="userLoginFlag"
+		th:if="${session.userSeq}"
+		readonly 
+		disabled/>
+	<input 
+		class="modelVariable" 
+		type="number" 
+		id="postSeq" 
+		th:value="${postSeq}" 
+		readonly 
+		disabled/>
+	<input 
+		class="modelVariable" 
+		type="number"
+		id="maxCommentLength"
+		th:value="${maxCommentLength}" 
+		readonly 
+		disabled/>
+	
+	
+	<div class="postTitle" th:text="${postTitle}"></div>
+	
+	<div class="postInfo">
+	
+		<div class="postInfoElement" id="postWriterInfo" th:attr="writer_seq = ${postWriterSeq}">
+			<img class="postInfoImage" src="/img/original/tortoise_upperBody_bigger.png"/>
+			<span class="postInfoText" th:text="${postWriter}"></span>
+		</div>
+		
+		<div class="postInfoElement" th:if="${postCreationTime}">
+			<img class="postInfoImage" src="/img/original/pencil_smaller.png"/>
+			<span class="postInfoText"	id="postCreationTime" th:text="${postCreationTime}"></span>
+		</div>
+
+		<div class="postInfoElement" th:if="${postUpdatedTime}">
+			<img class="postInfoImage" src="/img/original/eraser.png"/>
+			<span class="postInfoText"	id="postUpdatedTime" th:text="${postUpdatedTime}"></span>
+		</div>
+		
+		
+		<div class="postInfoElement">
+			<img class="postInfoImage" src="/img/original/eye.png"/>
+			<span class="postInfoText" th:text="${howManyPostViews}"></span>
+		</div>
+		
+		
+		<div class="postInfoElement">
+			<img class="postInfoImage" src="/img/original/heart.png"/>
+			<span 
+				class="postInfoText" 
+				th:text="${howManyPostLikes}" 
+				name="howmanyPostLikes"></span>
+		</div>
+		
+
+		<div class="postInfoElement">
+			<img class="postInfoImage" src="/img/original/comment3.png"/>
+			<span 
+				class="postInfoText" 
+				th:text="${howManyPostComments}"
+				name="howmanyPostComments"></span>
+		</div>
+		
+	</div>
+	
+
+	
+	<div class="postContents">
+		
+		<div 
+			class="postContent"
+			th:if="${postContents}"
+			th:each="postContent : ${postContents}">
+			
+			<span class="postContentSeq" th:text="${postContent.contentSeq}"></span>
+			
+			<pre 	
+				th:if="${postContent.typeSeq == 0}" 
+				class="textContent"
+				th:text="${postContent.contentValue}"></pre>
+		
+			<pre  
+				th:if="${postContent.typeSeq == 1}" 
+				class="boldTextContent"
+				th:text="${postContent.contentValue}"></pre>
+		
+			<div 
+				th:if="${postContent.typeSeq == 2}" 
+				class="imageContent">
+				<img th:src="${postContent.contentValue}" loading="lazy"/>
+			</div>
+		
+		
+		</div>
+	
+	</div>
+	
+	<div class="postLikeBtnWrapper">
+	
+		<input 
+			id="postLikeBtnCheckBox"
+			class="postLikeBtnCheckBox" 
+			type="checkbox"
+			th:checked="${postLikedOrNot}"/>
+		
+		<div 
+			class="postLikeBtn" 
+			id="postLikeBtn">
+			<img class="postLikeBtnImg" 		src="/img/original/heart.png"/>
+			<img class="postLikeBtnImg_colored" src="/img/original/heart_colored.png"/>
+			<span 
+				name="howmanyPostLikes"
+				class="postLikeBtnText" 
+				th:text="${howManyPostLikes}"></span>
+		</div>
+		
+	</div>
+	
+	
+	
+	
+	<div class="postRelatedBtns">	
+		<div 
+			class="postRelatedBtn" 
+			id="returnToBoardBtn">RETURN TO BOARD</div>
+		
+		
+		<!-- 로그인중인 user 에게만 보이도록 표시 -->
+		<div 
+			class="postRelatedBtn" 
+			id="postBtn"
+			th:style="${session.userSeq} != null ? 'display:block':'display:none'">POST</div>
+		
+		<!-- 해당 post 의 작성자에게만 보이도록 나중에 수정 -->
+		<div 
+			class="postRelatedBtn" 
+			id="modifyBtn"
+			th:style="${session.userSeq} == ${postWriterSeq} ? 'display:block':'display:none'">MODIFY</div>
+		<div 
+			class="postRelatedBtn" 
+			id="deleteBtn"
+			th:style="${session.userSeq} == ${postWriterSeq} ? 'display:block':'display:none'">DELETE</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	<!-- 
+			
+			이 모양으로 갈듯 
+			댓글쓰기 창 다음 댓글들.
+			
+			맨 아래는 discussionBoard 처럼 pagination + moreBtn
+		
+	-->
+	
+	
+	
+	<div class="postComments" 
+		id="postComments" 
+		th:style="${postComments.size() <= 0 ? 'display:none' : 'display:block'}">
+		
+		
+		<div class="postComment" 
+			th:if="${postComments}" 
+			th:each="postComment:${postComments}"
+			th:name="${postComment.parentCommentSeq != null} ? 'childComment':'parentComment'">
+			
+			<div class="postCommentSeq" th:text="${postComment.commentSeq}"></div>	 
+			
+			<div class="postCommentInfo">
+			
+				<div class="postCommentWriter">
+					<img class="postChildCommentArrow" th:if="${postComment.parentCommentSeq}" src="/img/mini/comment_mini.png"/>
+					<img 
+						class="postCommentWriterImg" 
+						th:src="'/img/mini/tortoise_type_user_colored_mini.png'"
+						/>
+					<span class="postCommentWriterName" th:text="${postComment.username}"></span>
+					<span class="postCommentWriterSeq" th:text="${postComment.userSeq}"></span>
+				</div>	
+				
+				<img 
+					class="postCommentEtc"
+					src="/img/mini/kebab_icon_mini.png"
+					th:style="${postComment.isUserComment} ? 'display:block':'display:none'"/>
+				
+			</div>
+			
+			<pre class="postCommentContent"><span class="targetCommentSeq" th:if="${postComment.targetCommentSeq}" th:text="${postComment.targetCommentSeq}"></span><span class="targetedCommentWriter" th:if="${postComment.targetCommentSeq}" th:text="'@' + ${postComment.targetCommentWriter} + ' '"></span><span class="postCommentContentText" th:text="${postComment.commentContent}"></span></pre> 
+			
+			<div class="postCommentRelatedBtns">
+					<div class="postCommentLike">
+						<input 
+							class="postCommentLikedOrNot" 
+							type="checkbox"
+							th:checked="${postComment.isLiked}"/>
+						<img class="postCommentLikeImg" name="postCommentLikedImg" src="/img/mini/comment_liked_mini.png"/>
+						<img class="postCommentLikeImg" name="postCommentUnLikedImg" src="/img/mini/comment_like_mini.png"/>
+						<span class="postCommentLikeNumber" th:text="${postComment.likes}"></span>
+					</div>	
+					
+					<div class="postCommentReply">
+						<img class="postCommentReplyImg" src="/img/mini/comment2_mini.png"/>
+					</div>
+			</div>
+			
+			
+			<div class="postCommentCreated" 
+				th:text="${postComment.commentCreationTime}"></div> 
+				
+			<div class="postCommentUpdated" 
+				th:if="${postComment.commentUpdatedTime}" 
+				th:text="${postComment.commentUpdatedTime}"></div> 
+		</div>
+		
+	</div>
+	
+
+	
+	
+	<div class="CommentWrite">
+		
+		<div class="CommentWriteContentWrapper">
+			<textarea 
+				class="CommentWriteContent" 
+				id="CommentWriteContent" 
+				th:placeholder="${session.userSeq} != null ? 'Feel free to leave a comment!' : 'Please login to comment'"
+				spellcheck="false"
+				th:maxLength="${maxCommentLength}"
+				rows="1"
+				
+				th:disabled = "${session.userSeq} == null"
+				th:style = "${session.userSeq} == null ? 'opacity:0.4':'opacity:1'"></textarea>
+			<div class="CommentWriteContentLength">
+				<span id="CommentWriteContentCurrentLength">0</span>
+				<span>/</span>
+				<span th:text="${maxCommentLength}"></span>
+			</div>
+		</div>
+		
+		<div 
+			class="CommentWriteBtn" 
+			id="commentWriteBtn"
+			th:style = "${session.userSeq} == null ? 'opacity:0.4':'opacity:1'">Comment</div>
+	
+	</div>
+	
+	
+	
+	<div class="modalBackground" id="modalBackground">
+		<div class="modal">
+			<span class="modalText">waiting..</span>
+			<img class="modalImage" src="/img/mini/progressCircle_mini.png"/>
+		</div>
+	</div>
+	
+	<div class="modalBackground" id="dialogModalBackground"></div>
+
+
+</div>
+</section>

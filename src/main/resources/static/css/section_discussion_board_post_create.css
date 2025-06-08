@@ -1,0 +1,528 @@
+@charset "UTF-8";
+
+section {
+	margin:70px 0 0 0;
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+section .content {
+	width:100%;
+	max-width:600px;
+	padding:20px 10px;
+}
+
+section .content .postTypeSelectWrapper {
+	padding:10px;
+}
+
+section .content .postTypeSelectWrapper .postTypeSelect {
+	padding:10px;
+	font-size:15px;
+	border:1px solid #ddd;
+	color:#ddd;
+	background-color:white;
+	cursor:pointer;
+}
+
+section .content .postTypeSelectWrapper .postTypeSelect:focus {
+	padding:10px;
+	font-size:15px;
+	border:1px solid black;
+	color:black;
+}
+
+section .content .modelVariable {
+	display:none;
+}
+
+section .content .viewPager {
+	display:flex;
+	flex-direction:row;
+	flex-wrap:nowrap;
+	width:100%;
+	overflow:hidden;
+	position:relative;
+	
+	height:auto;
+}
+
+section .content .viewPager .viewPagerPage {
+	flex: 0 0 100%;
+	min-width: 100%;
+	transition:0.3s;
+}
+
+section .content .viewPager .viewPagerPage .justViewPageContainer {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	width:100%;
+	padding:10px 10px 10px 10px;
+	
+	gap:20px;
+}
+
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper {
+	width:100%;
+	position:relative;
+}
+
+
+
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postTitle{
+    width: 100%;
+	border:1px solid #ddd;
+    padding: 20px;
+    resize: none;
+    overflow: hidden;
+    
+    font-size:16px;
+   	font-family: sans-serif;
+   	letter-spacing: 0.5px;
+	line-height:24px;
+	height:auto;
+	
+	box-sizing: border-box;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postTitle:focus {
+	border:1px solid black;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postTitle:focus ~ .postContentTitle {
+	color:black;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postTitle:focus ~ .postContentLength {
+	color:black;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postTitle::placeholder {
+	white-space: nowrap;     
+    overflow: hidden;           
+    text-overflow: ellipsis;
+    color: #ddd;
+}
+
+
+
+
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContent {
+	z-index:2px;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContentDelete {
+	width:30px;
+	height:30px;
+	position:absolute;
+	right:0;
+	top:0;
+	transform:translate(40%,-40%);
+	padding:5px;
+	background-color:white;
+	z-index:3;
+	cursor:pointer;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContentTitle {
+	position:absolute;
+	left:0;
+	top:0;
+	transform:translate(10px,-10px);
+	padding:5px;
+	background-color:white;
+	
+	display:block;
+	font-size:11px;
+	color:#ddd;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContentLength {
+	position:absolute;
+	right:0;
+	bottom:0;
+	padding:5px;
+	
+	display:block;
+	font-size:11px;
+	color:#ddd;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContentLength .currentLength::after {
+	content:' / ';
+}
+
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContent[name="textContent"]{
+    width: 100%;
+	border:1px solid #ddd;
+    padding: 20px;
+    resize: none;
+    overflow: hidden;
+    
+    font-size:16px;
+   	font-family: sans-serif;
+   	letter-spacing: 0.5px;
+	line-height:24px;
+	height:auto;
+	
+	box-sizing: border-box;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContent[name="textContent"]:focus {
+	border:1px solid black;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContent[name="textContent"]:focus ~ .postContentTitle {
+	color:black;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContent[name="textContent"]:focus ~ .postContentLength {
+	color:black;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContent[name="textContent"]::placeholder {
+	white-space: nowrap;     
+    overflow: hidden;           
+    text-overflow: ellipsis;
+    color: #ddd;
+}
+
+
+
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContent[name="boldTextContent"]{
+    width: 100%;
+	border:1px solid #ddd;
+    padding: 20px;
+    resize: none;
+    overflow: hidden;
+    
+    font-size:16px;
+   	font-family: sans-serif;
+   	font-weight:bold;
+   	letter-spacing: 0.5px;
+	line-height:24px;
+	height:auto;
+	
+	box-sizing: border-box;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContent[name="boldTextContent"]:focus {
+	border:1px solid black;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContent[name="boldTextContent"]:focus ~ .postContentTitle {
+	color:black;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContent[name="boldTextContent"]:focus ~ .postContentLength {
+	color:black;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContent[name="boldTextContent"]::placeholder {
+	white-space: nowrap;     
+    overflow: hidden;           
+    text-overflow: ellipsis;
+    color: #ddd;
+}
+
+
+
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContent[name="imgContent"]{
+    width: 100%;
+    padding:20px;
+    border:1px solid #ddd;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100px;
+    position:relative;
+    cursor:pointer;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContent[name="imgContent"] .imgUploadImage{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%, -50%);
+    width:70px;
+    height:70px;
+    opacity:0.4;
+    z-index:0;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContent[name="imgContent"] .loadedImg {
+	z-index:2;
+	width:100%;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .postContentWrapper .postContent[name="imgContent"] .imgUpload{
+     display:none;
+}
+
+section .content .guide {
+	padding:0 10px;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	text-align:center;
+	font-size:14px;
+	line-height:18px;
+	color:red;
+}
+
+
+section .content .buttons {
+	padding:20px 10px;
+	width:100%;
+}
+
+section .content .buttons .viewPagerButton {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:100%;
+	min-height:40px;
+	border:0;
+	border-radius:5px;
+	background-color:#09aa5c;
+	color:white;
+	font-weight:bold;
+	cursor:pointer;
+	transition:0.3s;
+}
+section .content .buttons .viewPagerButton:hover {
+	background-color:green;
+}
+section .content .buttons .viewPagerButton[name="disabled"] {
+	background-color:lightgray;
+}
+section .content .buttons .viewPagerButton[name="disabled"]:hover {
+	background-color:lightgray;
+}
+
+
+section .content #modalBackground {
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background-color:rgba(0,0,0,0.3);
+	z-index:3000;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	display:none;
+}
+section .content .modal {
+	max-width:150px;
+	width:85%;
+	min-height:90px;
+	background-color:white;
+	
+	border-radius:15px;
+	
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	gap:15px;
+}
+section .content .modal .modalText {
+	font-size:18px;
+}
+section .content .modal .modalImage {
+	width:25px;
+	height:25px;
+	animation: rotateAnimation 5s linear infinite;
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+
+
+.previewWrapper {
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	position:relative;
+	
+	flex-direction:column;
+}
+.previewWrapper .preview {
+	opacity:0;
+	position:fixed;
+	left:50%;
+	top:100%;
+	transform:translate(-50%, 0);
+	width:100%;
+	max-width:600px;
+	height:100%;
+	background-color:white;
+	z-index:1300;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	
+	transition:0.3s;
+	overflow:auto;
+}
+.previewWrapper .previewOnOff{
+	display:none;
+}
+.previewWrapper .previewOnOff:checked ~ .preview {
+	opacity:1;
+	left:50%;
+	top:50%;
+	transform:translate(-50%, -50%);
+}
+.previewWrapper .previewOnOff:checked ~ .previewBackground {
+	display:block;
+}
+.previewWrapper .previewOnOff:unchecked ~ .previewBackground {
+	display:none;
+}
+.previewWrapper .previewBackground {
+	display:none;
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background-color: rgba(0, 0, 0, 0.1);
+	z-index:1250;
+}
+
+.previewWrapper .preview .postTitle {
+	padding: 3px 20px 10px 20px;
+	font-size: 16px;
+	line-height: 1.4;
+	font-weight: bold;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+.previewWrapper .preview .postInfo {
+	padding: 0px 20px;
+	padding-bottom:5px;
+	display:flex;
+	flex-wrap:wrap;
+	gap:5px;
+}
+.previewWrapper .preview .postInfo .postInfoElement {
+	font-size:12px;
+	padding-right:10px;
+	display:flex;
+	justify-content:left;
+	align-items:center;
+	flex-wrap:wrap;
+}
+.previewWrapper .preview .postInfo .postInfoElement .postInfoImage{
+	width:30px;
+	height:30px;
+}
+.previewWrapper .preview .postInfo .postInfoElement[id="postWriterInfo"] {
+	cursor:pointer;
+}
+
+.previewWrapper .preview .postContents {
+	border-top: 1px solid gray;
+	padding: 10px 10px;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+}
+.previewWrapper .preview .postContents .postContent{
+	padding:5px 10px;
+	width:100%;
+}
+.previewWrapper .preview .postContents .postContent .postContentSeq {
+	display:none;
+}
+.previewWrapper .preview .postContents .postContent .textContent {
+	width:100%;
+	height:auto;
+	font-size: 14px;
+    word-wrap: break-word;
+    word-break: break-all;
+    line-height: 1.5;
+	white-space: pre-wrap
+}
+.previewWrapper .preview .postContents .postContent .boldTextContent {
+	width:100%;
+	height:auto;
+	font-size: 14px;
+    word-wrap: break-word;
+    word-break: break-all;
+    line-height: 1.5;
+	white-space: pre-wrap;
+	
+	font-weight:bold;
+}
+.previewWrapper .preview .postContents .postContent .imageContent {
+	position:relative;
+}
+.previewWrapper .preview .postContents .postContent .imageContent img {
+	width:100%;
+}
+
+
+
+
+
+
+.previewWrapper .preview .previewHeader{
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+}
+.previewWrapper .preview .previewHeader .empty {
+	width:70px;
+	height:70px;
+}
+.previewWrapper .preview .previewHeader .previewTitle {
+	width:calc( 100% - 140px );
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+.previewWrapper .preview .previewHeader .previewTitle img {
+	width:90%;
+	max-width:330px;
+}
+.previewWrapper .preview .previewHeader .previewTitle span {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	
+	font-weight:bold;
+	font-size:13px;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow: ellipsis;
+	
+	cursor:default;
+	display:none;
+}
+
+@media screen and (max-width:300px)
+{
+
+	.previewWrapper .preview .previewHeader .previewTitle img {
+		display:none;
+	}
+	
+	.previewWrapper .preview .previewHeader .previewTitle span {
+		display:block;
+	}
+	
+}
+
+.previewWrapper .preview .previewHeader .previewCloseBtn {
+	width:70px;
+	height:70px;
+	padding:10px;
+	cursor:pointer;
+	display:block;
+}
+.previewWrapper .preview .previewHeader .previewCloseBtn img {
+	width:100%;
+	height:100%;
+}
+
+

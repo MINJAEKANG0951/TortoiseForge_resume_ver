@@ -1,0 +1,939 @@
+@charset "UTF-8";
+
+
+section {
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	position:relative;
+	
+	flex-direction:column;
+}
+
+section .content {
+	width:100%;
+	max-width:600px;
+	display:flex;
+	justify-content:center;
+	flex-direction:column;
+	align-items:flex-start;
+	padding:0 20px;
+} 
+
+
+
+
+section .content .messageTypeWrapper {
+	padding:10px;
+	width:100%;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+section .content .messageType {
+	display:none;
+}
+section .content #inboxMessage:checked ~ .messageTypeWrapper #inboxMessageTypeBox{
+	background-color:white;
+	border:1px solid black;
+	font-weight:bold;
+}
+section .content #sentMessage:checked ~ .messageTypeWrapper #sentMessageTypeBox{
+	background-color:white;
+	border:1px solid black;
+	font-weight:bold;
+}
+section .content #sentMessage:checked ~ .filterBtnsWrapper .filterBtns #unreadSelectedBtn {
+	opacity:0.1;
+}
+section .content #sentMessage:checked ~ .filterBtnsWrapper .filterBtns #readSelectedBtn {
+	opacity:0.1;
+}
+
+section .content .messageTypeWrapper .messageTypeBox {
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+
+	border:1px solid #ddd;
+	border-radius:5px;
+	padding:15px 5px;
+	font-size:15px;
+	cursor:pointer;
+	
+	user-select: none;
+}
+section .content .messageTypeWrapper .messageTypeBox:hover {
+	font-weight:bold;
+}
+@media screen and (max-width:210px)
+{
+
+	section .content .messageTypeWrapper {
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		flex-direction:column;
+	}
+	
+}
+
+
+
+
+section .content .composeBtnWrapper {
+	padding:10px 10px;
+	width:100%;
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+}
+section .content .composeBtnWrapper .pagination {
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	flex-wrap:wrap;
+	user-select: none;
+	border:1px solid #808080;
+	border-radius:5px;
+}
+section .content .composeBtnWrapper .pagination .paginationBtn {
+	font-size:15px;
+	padding:15px;
+	cursor:pointer;
+}
+section .content .composeBtnWrapper .pagination .paginationBtn .currentPage::after{
+	content: "/";
+    display:inline-block;
+    width: 1px;
+    height: 9px;
+    margin-left:3px;
+}
+section .content .composeBtnWrapper .pagination .paginationBtn .lastPage::before{
+	content: "";
+    display:inline-block;
+    width: 1px;
+    height: 9px;
+    margin-right:3px;
+}
+section .content .composeBtnWrapper .composeBtn {
+	padding:10px;
+	border:1px solid #808080;
+	border-radius:5px;
+	font-size:13px;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	gap:5px;
+	
+	user-select: none;
+	cursor:pointer;
+}
+section .content .composeBtnWrapper .composeBtn .composeBtnImg {
+	width:25px;
+	height:25px;
+}
+@media screen and (max-width:280px)
+{
+
+	section .content .composeBtnWrapper {
+	    flex-direction: column;
+	    gap:10px;
+	    align-items: flex-end;
+	}
+	
+	section .content .composeBtnWrapper .composeBtn span {
+	    display:none;
+	}
+}
+
+
+
+section .content .pageSizeTypesWrapper {
+	padding:10px;
+	display:none;
+}
+section .content .pageSizeTypesWrapper .pageSize {
+	padding:10px;
+	font-size:15px;
+	cursor:pointer;
+}
+
+
+
+
+section .content .filterBtnsWrapper {
+	display:flex;
+	justify-content:left;
+	align-items:center;
+	padding:10px;
+	width:100%;
+	border-bottom:1px solid black;
+}
+section .content .filterBtnsWrapper .filterBtns {
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	width:100%;
+}
+section .content .filterBtnsWrapper .filterBtns .filterBtn {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	cursor:pointer;
+	min-width:65px;
+	user-select: none;
+	position:relative;
+}
+section .content .filterBtnsWrapper .filterBtns .filterBtn label {
+	display:block;
+	position:absolute;
+	width:100%;
+	height:100%;
+	cursor:pointer;
+}
+section .content .filterBtnsWrapper .filterBtns .filterBtn .filterCheckbox {
+	display:none;
+}
+section .content .filterBtnsWrapper .filterBtns .filterBtn .filterCheckbox:checked ~ filterBtnImage{
+	display:none;
+}
+section .content .filterBtnsWrapper .filterBtns .filterBtn .filterCheckbox:checked ~ filterBtnImageChecked{
+	display:block;
+}
+section .content .filterBtnsWrapper .filterBtns .filterBtn .filterBtnImage {
+	width:25px;
+	height:25px;
+	margin:5px;
+}
+section .content .filterBtnsWrapper .filterBtns .filterBtn .filterBtnImageChecked {
+	width:25px;
+	height:25px;
+	margin:5px;
+	display:none;
+}
+section .content .filterBtnsWrapper .filterBtns .filterBtn .filterBtnText {
+	text-align:center;
+	font-size:12px;
+	font-weight:normal;
+}
+section .content .filterBtnsWrapper .filterBtns .filterBtn .filterBtnTextChecked {
+	text-align:center;
+	font-size:12px;
+	font-weight:normal;
+	display:none;
+}
+
+
+section .content .filterBtnsWrapper .filterBtns .filterBtn .filterCheckbox:checked ~ .filterBtnImage {
+	display:none;
+}
+section .content .filterBtnsWrapper .filterBtns .filterBtn .filterCheckbox:checked ~ .filterBtnImageChecked {
+	display:block;
+}
+section .content .filterBtnsWrapper .filterBtns .filterBtn .filterCheckbox:checked ~ .filterBtnText {
+	display:none;
+}
+section .content .filterBtnsWrapper .filterBtns .filterBtn .filterCheckbox:checked ~ .filterBtnTextChecked {
+	display:block;
+}
+
+@media screen and (max-width:310px)
+{
+	section .content .filterBtnsWrapper .filterBtns {
+    	flex-wrap: wrap;
+    	gap:10px;
+	}
+	section .content .filterBtnsWrapper .filterBtns .filterBtn {
+    	min-width:45px;
+	}
+}
+@media screen and (max-width:160px)
+{
+	section .content .filterBtnsWrapper .filterBtns {
+    	display:none;
+	}
+}
+
+
+
+section .content .messages {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	width:100%;
+	user-select: none;
+}
+section .content .messages .message {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:100%;
+	padding:10px;
+	border-bottom:1px solid #ddd;
+	cursor:pointer;
+}
+section .content .messages .message:last-child {
+	border-bottom:1px solid transparent;
+}
+
+
+
+section .content .messages .message .statusHolder {
+	display:none;
+}
+section .content .messages .message .messageStatus img {
+	display:none;
+}
+section .content .messages .message .statusHolder[status="read"] 	~ .messageStatus .messageReadImage  {
+	display:block;
+}
+section .content .messages .message .statusHolder[status="unread"] 	~ .messageStatus .messageUnreadImage {
+	display:block;
+}
+
+
+section .content .messages .message[type="inbox"] .statusHolder[status="unread"] ~ .messageInfo {
+	opacity:1;
+	font-weight:bold;
+}
+section .content .messages .message[type="inbox"] .statusHolder[status="unread"] ~ .messageStatus {
+	opacity:1;
+}
+section .content .messages .message[type="inbox"] .statusHolder[status="read"] ~ .messageInfo {
+	opacity:0.4;
+}
+section .content .messages .message[type="inbox"] .statusHolder[status="read"] ~ .messageStatus {
+	opacity:0.4;
+}
+
+
+section .content .messages .message[type="sent"] .statusHolder[status="unread"] ~ .messageInfo {
+	opacity:1;
+}
+section .content .messages .message[type="sent"] .statusHolder[status="unread"] ~ .messageStatus {
+	opacity:1;
+}
+section .content .messages .message[type="sent"] .statusHolder[status="read"] ~ .messageInfo {
+	opacity:1;
+}
+section .content .messages .message[type="sent"] .statusHolder[status="read"] ~ .messageStatus {
+	opacity:1;
+}
+
+
+
+
+
+section .content .messages .message .selectMessage {
+	min-width:65px;
+	min-height:65px;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	cursor:pointer;
+	position:relative;
+}
+section .content .messages .message .selectMessage .messageCheckbox {
+	display:none;
+}
+section .content .messages .message .selectMessage .messageUncheckedIcon {
+	width:25px;
+	height:25px;
+	display:block;
+}
+section .content .messages .message .selectMessage .messageCheckedIcon {
+	width:25px;
+	height:25px;
+	display:none;
+}
+section .content .messages .message .selectMessage .messageCheckbox:checked ~ .messageUncheckedIcon{
+	display:none;
+}
+section .content .messages .message .selectMessage .messageCheckbox:checked ~ .messageCheckedIcon{
+	display:block;
+}
+
+
+
+section .content .messages .message .messageInfo {
+	width:calc(100% - 130px);
+	padding:5px;
+	padding-right:20px;
+}
+section .content .messages .message .messageInfo .messageSeq {
+	display:none;
+}
+section .content .messages .message .messageInfo .messagePreview {
+	font-size:14px;
+	line-height:20px;
+	margin:5px 0;
+			
+  	overflow: hidden;
+	white-space:nowrap;
+  	text-overflow: ellipsis;
+  	
+  	width: 100%;
+}
+section .content .messages .message .messageInfo .messageContent {
+	/* display:none 할 경우, 제대로 lineBreak 를 ajax 로 불러오지 못함. */
+	opacity:0;
+	width:0px;
+	height:0px;
+	font-size: 14px;
+    word-wrap: break-word;
+    word-break: break-all;
+    line-height: 1.5;
+	white-space: pre-wrap;
+}
+section .content .messages .message .messageInfo .participant {
+	font-size:12px;
+	padding:5px 0;
+	color:#5a5a5a;
+	display:flex;
+	align-items:center;
+	justify-content:left;
+	gap:5px;
+	flex-wrap:wrap;
+}
+section .content .messages .message .messageInfo .created {
+	font-size:12px;
+	color:#5a5a5a;
+}
+section .content .messages .message .messageInfo .readAt {
+	font-size:12px;
+	color:#5a5a5a;
+	display:none;
+}
+section .content .messages .message .messageInfo .openedAt {
+	font-size:12px;
+	color:#5a5a5a;
+	display:none;
+}
+
+section .content .messages .message .messageStatus {
+	width:65px;
+	height:65px;
+	padding:20px;
+}
+section .content .messages .message .messageStatus img {
+	width:100%;
+	height:100%;
+}
+
+
+@media screen and (max-width:310px)
+{
+	section .content .messages .message .messageInfo {
+		width:calc(100% - 90px);
+	}
+	section .content .messages .message .selectMessage {
+		min-width:45px;
+	}
+	section .content .messages .message .messageStatus {
+		width:45px;
+		height:45px;
+		padding:10px;
+	}
+}
+@media screen and (max-width:230px)
+{
+	section .content .messages .message .messageInfo {
+		width:calc(100% - 45px);
+	}
+	section .content .messages .message .messageStatus {
+		display:none;
+	}
+}
+@media screen and (max-width:200px)
+{
+	section .content .messages .message .messageInfo .participant {
+		display:none;
+	}
+	section .content .messages .message .messageInfo .created {
+		display:none;
+	}
+}
+@media screen and (max-width:160px)
+{
+	section .content .messages .message .messageInfo {
+		width:100%;
+	}
+	section .content .messages .message .selectMessage {
+    	display:none;
+	}
+}
+
+
+section .content .emptyMessages {
+	width:100%;
+	padding:60px 30px 60px 30px;
+	display:flex;
+	justify-content:center;
+	align-items: center;
+
+	font-size: 20px;
+	line-height: 30px;
+	font-weight: bold;
+	opacity: 0.3;
+	text-align: center;
+}
+
+
+section .content .moreBtn {
+	width:100%;
+	max-width:600px;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	
+	padding:10px;
+	position:relative;
+	cursor:pointer;
+}
+section .content .moreBtn img {
+	width:40px;
+	height:40px;
+}
+section .content .moreBtn #moreBtnProgressCircle {
+	padding:5px;
+	animation: rotateAnimation 5s linear infinite;
+	display:none;
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+
+section .content .boardBottomNavBar {
+	
+	width:100%;
+	max-width:600px;
+	
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	
+	padding:10px;
+	user-select:none;
+	
+}
+section .content .boardBottomNavBar .pageNavigation {
+	width:100%;
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+}
+section .content .boardBottomNavBar .pageNavigation .pagesAroundArrow {
+	width:50px;
+	height:50px;
+	padding:10px;
+	cursor:pointer;
+}
+section .content .boardBottomNavBar .pageNavigation .pagesAround {
+	padding:10px 15px;
+	
+	width:calc( 100% - 60px );
+	max-width:400px;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-wrap:wrap;
+}
+section .content .boardBottomNavBar .pageNavigation .pagesAround .pageAround{
+	font-size:16px;
+	padding:15px;
+	margin:5px;
+	color:#a5a5a5;;
+	cursor:pointer;
+}
+section .content .boardBottomNavBar .pageNavigation .pagesAround .pageCurrent{
+	font-size:16px;
+	padding:15px;
+	margin:5px;
+	font-weight:bold;
+}
+
+
+@media screen and (max-width:235px)
+{
+	section .content .boardBottomNavBar .pageNavigation {
+		width:100%;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		flex-direction:column;
+		flex-wrap:wrap;
+	}
+}
+
+
+
+section .content .drawerWrapper {
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	position:relative;
+	
+	flex-direction:column;
+}
+section .content .drawerWrapper .drawer {
+	opacity:0;
+	position:fixed;
+	left:0;
+	top:0;
+	transform:translateX(100%);
+	width:100%;
+	height:100%;
+	max-width:600px;
+	background-color:white;
+	z-index:1300;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	
+	transition:0.3s;
+	overflow:auto;
+}
+
+
+section .content .drawerWrapper .drawerOnOff{
+	display:none;
+}
+section .content .drawerWrapper .drawerOnOff:checked ~ .drawer {
+	opacity:1;
+	transform:translateX(0);
+}
+section .content .drawerWrapper .drawerOnOff:checked ~ .drawerBackground {
+	display:block;
+}
+section .content .drawerWrapper .drawerOnOff:unchecked ~ .drawerBackground {
+	display:none;
+}
+section .content .drawerWrapper .drawerBackground {
+	display:none;
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background-color: rgba(0, 0, 0, 0.1);
+	z-index:1250;
+}
+
+@media screen and (min-width:600px)
+{
+	section .content .drawerWrapper .drawer {
+		left:50%;
+		top:100%;
+		transform:translateX(-50%);
+	}
+	
+	section .content .drawerWrapper .drawerOnOff:checked ~ .drawer {
+		left:50%;
+		top:100%;
+		transform:translate(-50%, -100%);
+	}
+}
+
+
+section .content .drawerWrapper .drawer .drawerHeader{
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+}
+section .content .drawerWrapper .drawer .drawerHeader .empty {
+	width:70px;
+	height:70px;
+}
+section .content .drawerWrapper .drawer .drawerHeader .drawerTitle {
+	width:calc( 100% - 140px );
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+section .content .drawerWrapper .drawer .drawerHeader .drawerTitle img {
+	width:90%;
+	max-width:330px;
+}
+section .content .drawerWrapper .drawer .drawerHeader .drawerTitle span {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	
+	font-weight:bold;
+	font-size:13px;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow: ellipsis;
+	
+	cursor:default;
+	display:none;
+}
+
+@media screen and (max-width:300px)
+{
+
+	section .content .drawerWrapper .drawer .drawerHeader .drawerTitle img {
+		display:none;
+	}
+	
+	section .content .drawerWrapper .drawer .drawerHeader .drawerTitle span {
+		display:block;
+	}
+	
+}
+
+section .content .drawerWrapper .drawer .drawerHeader .drawerCloseBtn {
+	width:70px;
+	height:70px;
+	padding:10px;
+	cursor:pointer;
+	display:block;
+}
+section .content .drawerWrapper .drawer .drawerHeader .drawerCloseBtn img {
+	width:100%;
+	height:100%;
+}
+
+
+
+
+section .content .drawerWrapper .drawer .drawerSection {
+	padding:0 20px;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerData {
+	display:none;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerText {
+	padding:10px 0;
+	word-wrap: break-word;
+	line-height:1.5;
+	font-size:13px;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerText2 {
+	width:100%;
+	height:auto;
+	font-size: 14px;
+    word-wrap: break-word;
+    word-break: break-all;
+    line-height: 1.5;
+	white-space: pre-wrap;
+	padding:10px 0;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerText .drawerTextTitle {
+ 	font-weight:bold;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerText .drawerTextContent:before {
+ 	content:":";
+ 	padding:0 5px;
+}
+
+
+section .content .drawerWrapper .drawer .drawerSection .drawerInputWrapper {
+	width:100%;
+	position:relative;
+	margin:20px 0;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerInputWrapper .drawerInputWrapperTitle {
+	position:absolute;
+	left:10px;
+	top:-7px;
+	background-color:white;
+	color:#a6a7a8;
+	padding:0 10px;
+	font-size:13px;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerInputWrapper .drawerInput {
+	width:100%;
+	padding:20px;
+	border:1px solid #a6a7a8;
+	border-radius:20px;
+}
+
+section .content .drawerWrapper .drawer .drawerSection .drawerInputWrapper .drawerTextarea {
+	width:100%;
+	padding:20px;
+	border:1px solid #a6a7a8;
+	border-radius:20px;
+	
+	resize: none;
+    overflow: hidden;
+    
+    font-size:16px;
+   	font-family: sans-serif;
+   	letter-spacing: 0.5px;
+	line-height:24px;
+	height:auto;
+	
+	box-sizing: border-box;
+}
+
+section .content .drawerWrapper .drawer .drawerSection .drawerInputWrapper .textLength {
+	position:absolute;
+	right:0;
+	bottom:0;
+	padding:10px;
+	color:#a6a7a8;
+	font-size:12px;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerInputWrapper .textLength 
+.textCurrentLength:after
+{
+	content:" / ";
+}
+
+
+section .content .drawerWrapper .drawer .drawerSection .drawerRadioBox {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	gap:10px;
+}
+
+section .content .drawerWrapper .drawer .drawerSection .drawerRadioBox .radioWrapper {
+	border:1px solid #ddd;
+	border-radius:10px;
+	padding:10px;
+	cursor:pointer;
+	transition:0.3s;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerRadioBox .radioWrapper .radioTitle {
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	padding:5px 0;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerRadioBox .radioWrapper .radioTitle .radioTitleText {
+	font-size:14px;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerRadioBox .radioWrapper .radioTitle .radioTitleRadio {
+	margin:0;
+	margin-left:10px;
+	cursor:pointer;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerRadioBox .radioWrapper .radioContent {
+	font-size:13px;
+	padding:5px 0;
+	line-height:1.4;
+	word-wrap: break-word;
+}
+
+section .content .drawerWrapper .drawer .drawerGuide {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	color:red;
+	padding:0 20px;
+	font-size:13px;
+	
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+
+
+
+section .content .drawerWrapper .drawer .drawerBtnWrapper {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:100%;
+	padding:20px;
+	gap:10px;
+}
+section .content .drawerWrapper .drawer .drawerBtnWrapper .drawerBtn {
+	width:100%;
+	height:40px;
+	background-color:#006495;
+	border:0;
+	border-radius:5px;
+	color:white;
+	font-weight:bold;
+	transition:0.3s;
+	cursor:pointer;
+}
+section .content .drawerWrapper .drawer .drawerBtnWrapper .drawerDeleteBtn {
+	width:100%;
+	height:40px;
+	background-color:brown;
+	border:0;
+	border-radius:5px;
+	color:white;
+	font-weight:bold;
+	transition:0.3s;
+	cursor:pointer;
+}
+section .content .drawerWrapper .drawer .drawerBtnWrapper .drawerBtn:hover {
+	background-color:#014c71;
+}
+section .content .drawerWrapper .drawer .drawerBtnWrapper .drawerDeleteBtn:hover {
+	background-color:#e02e40;
+}
+
+
+
+
+section .content #modalBackground {
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background-color:rgba(0,0,0,0.3);
+	z-index:3000;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	display:none;
+}
+section .content .modal {
+	max-width:150px;
+	width:85%;
+	min-height:90px;
+	background-color:white;
+	
+	border-radius:15px;
+	
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	gap:15px;
+}
+section .content .modal .modalText {
+	font-size:18px;
+}
+section .content .modal .modalImage {
+	width:25px;
+	height:25px;
+	animation: rotateAnimation 5s linear infinite;
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+

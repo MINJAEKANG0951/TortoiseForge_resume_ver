@@ -1,0 +1,18 @@
+<header th:fragment="header_simple" id="headerContainer" type="simple">
+
+	<div id='header'>
+		<img id='backBtn' src='/img/original/arrow_back.png'/>
+		
+		<div id='title'>
+			<img	id='titleImg' th:if="${headerImgPath}"		th:src="${headerImgPath}"/>
+			<img	id='titleImg' th:unless="${headerImgPath}"	src='/img/original/title_readPost.png'/>
+			
+			<span	th:if="${headerTitle}" th:text="${headerTitle}"></span>
+			<span	th:unless="${headerTitle}">READ POST</span>
+		</div>
+		
+		<img class="headerIcon" th:if="${headerIcon}" 		th:src="${headerIcon}"/>
+		<img id="homeBtn" 		th:unless="${headerIcon}"	src="/img/original/home.png"/>
+	</div>
+
+</header>

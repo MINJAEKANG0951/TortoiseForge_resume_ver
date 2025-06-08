@@ -1,0 +1,103 @@
+<header th:fragment="header" id="headerContainer">
+
+	<div 
+		id="userSeq"
+		th:text="${session.userSeq}"></div>
+	
+	<input type="checkbox" name="menuVeiw" id="showMenu"/>
+	
+	<div id='header'>
+		<img id='logo' th:if="${headerLogoImgPath}" th:src="${headerLogoImgPath}"/>
+		<img id='logo' th:unless="${headerLogoImgPath}" src='/img/original/tortoise_blacksmith.png'/>
+		
+		<div id='title'>
+			<img	id='titleImg' th:if="${headerImgPath}"		th:src="${headerImgPath}"/>
+			<img	id='titleImg' th:unless="${headerImgPath}"	src='/img/original/title_main.png'/>
+			
+			<span	th:if="${headerTitle}" th:text="${headerTitle}"></span>
+			<span	th:unless="${headerTitle}">THE TORTOISE'S FORGE</span>
+		</div>
+		
+		<label id="hamburger" for="showMenu">&#9776;</label>
+	</div>
+	
+	<div id='sidebar'>
+	
+		<div id='sidebarTitle'>
+			<img id='sidebarLogo' src='/img/original/tortoise_blacksmith.png'/>
+			<label id='foldSideBar' for='showMenu'>&times;</label>
+		</div>
+		
+		<div id='loginStatus' th:if="${session.userSeq}">
+			Logged in as <span th:text="${session.username}">username</span>
+		</div>
+		
+		<div id='sidebarContent'>
+			<div class='activities'>
+				<div id="home" 				class='activity'><img src='/img/original/home.png'/><span>HOME</span></div>
+				<div id="creations" 		class='activity'><img src='/img/original/creations.png'/><span>CREATIONS</span></div>
+				<div id="discussionBoard" 	class='activity'><img src='/img/original/discussionBoard.png'/><span>DISCUSSION BOARD</span></div>
+			</div>
+		
+			<div class='activities'>
+		
+				<div 
+					id="accountSetting"
+					class='activity'
+					th:if="${session.userSeq}">
+					<img src='/img/mini/profile_mini.png'/>
+					<span>ACCOUNT SETTING</span>
+				</div>
+				
+				<div id="messages" 	class='activity' th:if="${session.userSeq}">
+						<img src='/img/original/message.png'/>
+						<span>MESSAGES</span>
+						<div class="redDot"></div>
+				</div>
+				
+				<div id="login" 	class='activity' th:if="${session.userSeq}" style="display:none"><img src='/img/original/gate_entrance.png'/><span>LOGIN</span></div>
+				<div id="logout" 	class='activity' th:if="${session.userSeq}"						><img src='/img/original/gate_exit.png'/><span>LOGOUT</span></div>
+
+				
+				
+				<div 
+					id="accountSetting"
+					class='activity'
+					th:unless="${session.userSeq}"
+					style='opacity:0.4'>
+					<img src='/img/mini/profile_mini.png'/>
+					<span>ACCOUNT SETTING</span>
+				</div>
+				
+				<div id="messages" 	class='activity' th:unless="${session.userSeq}" style='opacity:0.4'>
+					<img src='/img/original/message.png'/>
+					<span>MESSAGES</span>
+					<div class="redDot"></div>
+				</div>
+				
+				<div id="login" 	class='activity' th:unless="${session.userSeq}"						><img src='/img/original/gate_entrance.png'/><span>LOGIN</span></div>
+				<div id="logout" 	class='activity' th:unless="${session.userSeq}" style="display:none"><img src='/img/original/gate_exit.png'/><span>LOGOUT</span></div>
+
+				
+				
+				
+			</div>
+			
+			
+
+		
+			<div class='legalInfoGroup'>
+				<span class='legalInfoGroupTitle'>© 2024 THE TORTOISE'S FORGE</span>
+				<div class="legalInfoGroupItems">
+					<a href='/about' class='legalInfoGroupItem'>About</a>
+					<a href='/terms' class='legalInfoGroupItem'>Terms</a>
+					<a href='/privacy' class='legalInfoGroupItem'>Privacy</a>
+				</div>
+			</div>
+			
+		</div>
+	
+	</div>
+	<label id='sidebarBackground' for='showMenu'></label>
+
+</header>

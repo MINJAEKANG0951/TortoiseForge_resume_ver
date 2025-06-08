@@ -1,0 +1,464 @@
+@charset "UTF-8";
+
+section {
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	position:relative;
+	
+	flex-direction:column;
+}
+
+section .content {
+	width:100%;
+	max-width:600px;
+} 
+
+section .content .modelVariable {
+	display:none;
+}
+
+
+/* POST TITLE */
+section .content .postTitle {
+	padding: 3px 20px 10px 20px;
+	font-size: 16px;
+	line-height: 1.4;
+	font-weight: bold;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+
+
+/* POST INFO */
+section .content .postInfo {
+	padding: 0px 20px;
+	padding-bottom:5px;
+	display:flex;
+	flex-wrap:wrap;
+	gap:5px;
+}
+section .content .postInfo .postInfoElement {
+	font-size:12px;
+	padding-right:10px;
+	display:flex;
+	justify-content:left;
+	align-items:center;
+	flex-wrap:wrap;
+}
+section .content .postInfo .postInfoElement .postInfoImage{
+	width:30px;
+	height:30px;
+}
+section .content .postInfo .postInfoElement[id="postWriterInfo"] {
+	cursor:pointer;
+}
+
+/* POST CONTENT */
+section .content .postContents {
+	border-top: 1px solid gray;
+	padding: 10px 10px;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+}
+section .content .postContents .postContent{
+	padding:5px 10px;
+	width:100%;
+}
+section .content .postContents .postContent .postContentSeq {
+	display:none;
+}
+section .content .postContents .postContent .textContent {
+	width:100%;
+	height:auto;
+	font-size: 14px;
+    word-wrap: break-word;
+    word-break: break-all;
+    line-height: 1.5;
+	white-space: pre-wrap
+}
+section .content .postContents .postContent .boldTextContent {
+	width:100%;
+	height:auto;
+	font-size: 14px;
+    word-wrap: break-word;
+    word-break: break-all;
+    line-height: 1.5;
+	white-space: pre-wrap;
+	
+	font-weight:bold;
+}
+section .content .postContents .postContent .imageContent {
+	position:relative;
+}
+section .content .postContents .postContent .imageContent img {
+	width:100%;
+}
+
+
+
+
+/* LIKE POST BUTTON */
+section .content .postLikeBtnWrapper {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-wrap:wrap;
+	
+	padding:10px;
+}
+section .content .postLikeBtnWrapper .postLikeBtn {
+	min-width:50px;
+	min-height:50px;
+	padding:10px;
+	position:relative;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	
+	border:1px solid black;
+	cursor:pointer;
+}
+section .content .postLikeBtnWrapper .postLikeBtn .postLikeBtnImg {
+	width:40px;
+	height:40px;
+	display:block;
+}
+section .content .postLikeBtnWrapper .postLikeBtn .postLikeBtnImg_colored {
+	width:40px;
+	height:40px;
+	display:none;
+}
+section .content .postLikeBtnWrapper .postLikeBtn .postLikeBtnText {
+	font-size: 11px;
+    word-wrap: break-word;
+    word-break: break-all;
+    line-height: 1.5;
+}
+section .content .postLikeBtnWrapper .postLikeBtnCheckBox {
+	display:none;
+}
+section .content .postLikeBtnWrapper .postLikeBtnCheckBox:checked + .postLikeBtn {
+	font-weight:bold;
+}
+section .content .postLikeBtnWrapper .postLikeBtnCheckBox:checked + .postLikeBtn .postLikeBtnImg {
+	display:none;
+}
+section .content .postLikeBtnWrapper .postLikeBtnCheckBox:checked + .postLikeBtn .postLikeBtnImg_colored {
+	display:block;
+}
+
+
+
+
+/* POST RELATED BTNS */
+section .content .postRelatedBtns {
+	border-bottom: 1px solid gray;
+	padding:10px 20px;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-wrap:wrap;
+	gap:10px;
+}
+section .content .postRelatedBtns .postRelatedBtn {
+	padding:7px 12px;
+	border:1px solid #c8c8c8;
+	cursor:pointer;
+	
+	font-size:13px;
+}
+
+
+
+
+/* POST COMMENTS */
+section .content .postComments {
+	border-bottom:1px solid gray;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+}
+section .content .postComments .postComment {
+	width:100%;
+	padding: 10px 20px;
+	display:flex;
+	justify-content:center;
+	flex-direction:column;
+	border-top: 1px solid #c8c8c8;
+}
+section .content .postComments .postComment:first-child {
+	border-top:0px;
+}
+section .content .postComments .postComment .postCommentSeq {
+	display:none;
+}
+section .content .postComments .postComment .postCommentInfo{
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	flex-wrap:wrap;
+}
+section .content .postComments .postComment .postCommentInfo .postCommentWriter{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	cursor:pointer;
+}
+section .content .postComments .postComment .postCommentInfo .postCommentWriter .postCommentWriterImg{
+	width:30px;
+	height:30px;
+	margin-right:10px;
+	cursor:pointer;
+}
+section .content .postComments .postComment .postCommentInfo .postCommentWriter .postCommentWriterName{
+	font-size:14px; 
+	font-weight:bold;
+	word-wrap:break-word;
+    word-break:break-all;
+	font-family:sans-serif;
+    line-height:25px;
+}
+section .content .postComments .postComment .postCommentInfo .postCommentWriter .postCommentWriterSeq{
+	display:none;
+}
+section .content .postComments .postComment .postCommentInfo .postCommentEtc{
+	opacity:0.5;
+	width:25px;
+	height:25px;
+	
+	cursor:pointer;
+}
+section .content .postComments .postComment .postCommentContent {
+	padding: 10px 15px 10px 0;
+	font-size: 14px;
+    line-height: 1.5;
+    color: #000;
+    word-break: break-all;
+    word-wrap: break-word;
+    margin-top:3px;
+    
+    width:100%;
+	height:auto;
+	white-space: pre-wrap;
+}
+section .content .postComments .postComment .postCommentContent .targetedCommentWriter {
+	color:blue;
+	font-weight:bold;
+	cursor:pointer;
+}
+section .content .postComments .postComment .postCommentContent .targetCommentSeq {
+	display:none;
+}
+
+section .content .postComments .postComment .postCommentRelatedBtns {
+	display:flex;
+	justify-content:left;
+	align-items:center;
+	flex-direction:row;
+	flex-wrap:wrap;
+	gap:20px;
+	
+	padding:10px 0;
+}
+section .content .postComments .postComment .postCommentRelatedBtns .postCommentLike {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:row;
+	gap:5px;
+	
+	cursor:pointer;
+}
+section .content .postComments .postComment .postCommentRelatedBtns .postCommentLike .postCommentLikeImg {
+	width:25px;
+	height:25px;
+	border-radius:20%;
+}
+section .content .postComments .postComment .postCommentRelatedBtns .postCommentLike .postCommentLikeNumber {
+	font-size:13px;
+}
+section .content .postComments .postComment .postCommentRelatedBtns .postCommentLike .postCommentLikedOrNot {
+	display:none;
+}
+section .content .postComments .postComment .postCommentRelatedBtns .postCommentLike .postCommentLikeImg[name="postCommentLikedImg"] {
+	display:none;
+}
+section .content .postComments .postComment .postCommentRelatedBtns .postCommentLike .postCommentLikedOrNot:checked ~ .postCommentLikeImg[name="postCommentUnLikedImg"] {
+	display:none;
+}
+section .content .postComments .postComment .postCommentRelatedBtns .postCommentLike .postCommentLikedOrNot:checked ~ .postCommentLikeImg[name="postCommentLikedImg"] {
+	display:block;
+}
+section .content .postComments .postComment .postCommentRelatedBtns .postCommentLike .postCommentLikedOrNot:checked ~ .postCommentLikeNumber {
+	font-weight:bold;
+}
+
+section .content .postComments .postComment .postCommentRelatedBtns .postCommentReply {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:row;
+	gap:10px;
+	cursor:pointer;
+}
+section .content .postComments .postComment .postCommentRelatedBtns .postCommentReply .postCommentReplyImg {
+	width:25px;
+	height:25px;
+}
+
+
+section .content .postComments .postComment .postCommentCreated {
+	font-size:12px;
+	color:gray;
+}
+section .content .postComments .postComment .postCommentUpdated {
+	font-size:12px;
+	color:gray;
+	margin-top:3px;
+}
+
+
+
+section .content .postComments .postComment[name="childComment"] {
+	border-top: 1px dashed #c8c8c896;
+}
+section .content .postComments .postComment[name="childComment"] .postCommentInfo .postCommentWriter .postChildCommentArrow{
+	width:30px;
+	height:30px;
+}
+section .content .postComments .postComment[name="childComment"] .postCommentContent{
+	padding-left:30px;
+}
+section .content .postComments .postComment[name="childComment"] .postCommentRelatedBtns{
+	padding-left:30px;
+}
+section .content .postComments .postComment[name="childComment"] .postCommentCreated {
+	padding-left:30px;
+}
+section .content .postComments .postComment[name="childComment"] .postCommentUpdated {
+	padding-left:30px;
+}
+
+
+
+/* POST COMMNET WRITE */
+section .content .CommentWrite {
+	padding: 10px 20px;
+	display:flex;
+	justify-content:right;
+	align-items:flex-end;
+	flex-direction:column;
+	gap:10px;
+}
+section .content .CommentWrite .CommentWriteContentWrapper {
+	width:100%;
+	position:relative;
+}
+section .content .CommentWrite .CommentWriteContentWrapper .CommentWriteContent {
+    width: 100%;
+	border:1px solid #c8c8c8;
+    padding: 20px;
+    resize: none;
+    overflow: hidden;
+    
+    font-size:16px;
+   	font-family: sans-serif;
+   	letter-spacing: 0.5px;
+	line-height:24px;
+	height:auto;
+	
+	box-sizing: border-box;
+}
+section .content .CommentWrite .CommentWriteContentWrapper .CommentWriteContentLength {
+	position:absolute;
+	bottom:5px;
+	right:5px;
+	font-size:12px;
+	color:#c8c8c8;
+}
+section .content .CommentWrite .CommentWriteBtn {
+	padding:10px;
+	font-size:13px;
+	border:1px solid #c8c8c8;
+	color:black;
+	cursor:pointer;
+}
+
+
+
+
+
+
+section .content #modalBackground {
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background-color:rgba(0,0,0,0.3);
+	z-index:3000;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	display:none;
+}
+section .content .modal {
+	max-width:150px;
+	width:85%;
+	min-height:90px;
+	background-color:white;
+	
+	border-radius:15px;
+	
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	gap:15px;
+}
+section .content .modal .modalText {
+	font-size:18px;
+}
+section .content .modal .modalImage {
+	width:25px;
+	height:25px;
+	animation: rotateAnimation 5s linear infinite;
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+
+
+section .content #dialogModalBackground {
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background-color:rgba(0,0,0,0.1);
+	z-index:3000;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	display:none;
+}
+
+
+

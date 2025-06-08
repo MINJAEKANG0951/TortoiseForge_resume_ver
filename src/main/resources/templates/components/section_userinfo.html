@@ -1,0 +1,160 @@
+<section th:fragment="section_userinfo">
+<div class="content">
+	
+	
+	<input class="modelVariable" type="number" id="userSeq" th:if="${userSeq}"	th:value="${userSeq}" readonly/>
+	
+	
+	<div class="box">
+		<div class="boxTitle">Username</div>
+		<div class="boxContent" th:text="${username}"></div>
+	</div>
+	
+	<div class="box">
+		<div class="boxTitle">Type</div>
+		<div class="boxContent" th:text="${userType}"></div>
+	</div>
+	
+	
+	<input type="checkbox" id="disableBtns" th:checked="${session.userSeq == null}"/>
+
+	<span class="arrowBtn" id="openSendMessage">
+		<span class="arrowBtnTitle">send message</span>
+		<img class="arrowBtnImage" src="/img/mini/message2_mini.png"/>
+	</span>
+
+
+	<span class="arrowBtn" id="openReport">
+		<span class="arrowBtnTitle">report</span>
+		<img class="arrowBtnImage" src="/img/mini/handcuff_mini.png"/>
+	</span>
+	
+
+
+
+
+
+	<div class="drawerWrapper">
+	
+		<input 	class="drawerOnOff" id="sendMessageDrawerOnOff" type="checkbox"/>
+		<div 	class="drawer" 		id="sendMessageDrawer">
+		
+			<div class="drawerHeader">
+				<div class="empty"></div>
+				<div class="drawerTitle">
+					<img src="/img/original/title_send_message.png" class="drawerTitle"/>
+					<span>SEND MESSAGE</span>
+				</div>
+				
+				<label for="sendMessageDrawerOnOff" class="drawerCloseBtn"><img src="/img/original/close.png"/></label>
+			</div>
+		
+			
+			<div class="drawerSection">
+		
+				<div class="drawerInputWrapper">
+					<div class="drawerInputWrapperTitle">To</div>
+					<input class="drawerInput" id="recipient" type="text" th:value="${username}" disabled>
+				</div>
+	
+				<div class="drawerInputWrapper">
+					<div class="drawerInputWrapperTitle">Message</div>
+					<textarea
+						class="drawerTextarea" 
+						id="message"
+						th:maxLength="${maxMessageLength}" disabled></textarea>
+					<div class="textLength">
+						<span 
+							class="textCurrentLength" 
+							id="messageCurrentLength"></span>
+						<span 
+							class="textMaxLength" 	
+							id="messageMaxLength"
+							th:text="${maxMessageLength}"></span>
+					</div>
+				</div>
+
+			</div>
+			
+			<div class="drawerGuide" id="sendMessageGuide"></div>
+			
+			<div class="drawerBtnWrapper">
+				<button class="drawerBtn" id="sendMessageBtn" disabled>SEND</button>
+			</div>
+
+		</div>
+		<label 	for="sendMessageDrawerOnOff" 	class="drawerBackground"></label>
+		
+	</div>
+	
+	
+	
+	
+	<div class="drawerWrapper">
+	
+		<input 	class="drawerOnOff" id="reportDrawerOnOff" type="checkbox"/>
+		<div 	class="drawer" 		id="reportDrawer">
+		
+			<div class="drawerHeader">
+				<div class="empty"></div>
+				<div class="drawerTitle">
+					<img src="/img/original/title_report.png" class="drawerTitle"/>
+					<span>REPORT</span>
+				</div>
+				
+				<label for="reportDrawerOnOff" class="drawerCloseBtn"><img src="/img/original/close.png"/></label>
+			</div>
+		
+			
+			<div class="drawerSection">
+				<div class="drawerText">
+					Please enter the report details.
+				</div>
+		
+				<div class="drawerInputWrapper">
+					<div class="drawerInputWrapperTitle">Target</div>
+					<input class="drawerInput" id="reportTarget" type="text" th:value="${username}" disabled>
+				</div>
+		
+				<div class="drawerInputWrapper">
+					<div class="drawerInputWrapperTitle">Report details</div>
+					<textarea
+						class="drawerTextarea" 
+						id="reportDetails"
+						th:maxLength="${maxReportDetailsLength}" disabled></textarea>
+					<div class="textLength">
+						<span 
+							class="textCurrentLength" 
+							id="reportDetailsCurrentLength"></span>
+						<span 
+							class="textMaxLength" 	
+							id="reportDetailsMaxLength"
+							th:text="${maxReportDetailsLength}"></span>
+					</div>
+				</div>
+				
+			</div>
+			
+			
+			<div class="drawerGuide" id="reportGuide"></div>
+			
+			
+			<div class="drawerBtnWrapper">
+				<button class="drawerDeleteBtn" id="reportBtn" disabled>REPORT</button>
+			</div>
+
+		</div>
+		<label 	for="reportDrawerOnOff" 	class="drawerBackground"></label>
+		
+	</div>
+	
+	
+	<div class="modalBackground" id="modalBackground">
+		<div class="modal">
+			<span class="modalText">waiting..</span>
+			<img class="modalImage" src="/img/mini/progressCircle_mini.png"/>
+		</div>
+	</div>
+
+</div>
+</section>

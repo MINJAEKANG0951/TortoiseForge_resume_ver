@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>Signup complete!</title>
+<link rel="stylesheet" href="/css/reset.css">
+</head>
+<style>
+
+section {
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	position:relative;
+	flex-direction:column;
+	padding:30px;
+	row-gap:20px;
+	font-family:"Comic Sans MS", "Comic Sans", cursive;
+	
+	line-height:20px;
+}
+
+
+#thankYouText {
+
+	font-size:25px;
+	line-height:35px;
+	cursor:default;
+	max-width:400px;
+	
+}
+
+#thankYouImg {
+	cursor:default;
+	max-width:400px;
+	width:100%;
+	border-radius:10px;
+}
+
+#goHomeBtn {
+	cursor:pointer;
+	max-width:400px;
+	width:100%;
+	height:40px;
+	
+	font-size:17px;
+	
+	border:0;
+	border-radius:5px;
+	background-color:#09aa5c;
+	color:white;
+	font-family:"Comic Sans MS", "Comic Sans", cursive;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	transition:0.3s;
+}
+#goHomeBtn:hover {
+	background-color:#067740;
+}
+
+#goLoginBtn {
+	cursor:pointer;
+	max-width:400px;
+	width:100%;
+	height:40px;
+	
+	font-size:17px;
+	
+	border:0;
+	border-radius:5px;
+	background-color:rgb(145, 145, 255);
+	color:white;
+	font-family:"Comic Sans MS", "Comic Sans", cursive;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	transition:0.3s;
+}
+#goLoginBtn:hover {
+	background-color:rgb(90, 90, 255);
+}
+
+
+</style>
+<body>
+<section>
+
+	<div id="thankYouText">Thank you for being a friend!</div>
+	<div id="thankYouTextSmall">Your have successfully signed up!</div>
+	<img id="thankYouImg" src="/img/original/tortoise_chilling_on_water.png">
+	<button id="goHomeBtn" onclick="document.location='/'">go to main page</button>
+	<button id="goLoginBtn" onclick="document.location='/login'">login</button>
+
+</section>
+</body>
+<script>
+</script>
+</html>

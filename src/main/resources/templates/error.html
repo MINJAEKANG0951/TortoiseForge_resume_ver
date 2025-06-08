@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>Error</title>
+<link rel="stylesheet" href="/css/reset.css">
+</head>
+<style>
+
+section {
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	position:relative;
+	flex-direction:column;
+	padding:30px;
+	row-gap:20px;
+	
+	line-height:20px;
+}
+
+
+#thankYouText {
+
+	font-size:25px;
+	line-height:35px;
+	cursor:default;
+	max-width:400px;
+	
+}
+
+#thankYouTextSmall {
+	text-align:center;
+}
+
+#thankYouImg {
+	cursor:default;
+	max-width:400px;
+	width:100%;
+	border-radius:10px;
+	padding:30px;
+}
+
+#goHomeBtn {
+	cursor:pointer;
+	max-width:400px;
+	width:100%;
+	height:40px;
+	
+	font-size:17px;
+	
+	border:0;
+	border-radius:5px;
+	background-color:#09aa5c;
+	color:white;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	transition:0.3s;
+}
+#goHomeBtn:hover {
+	background-color:#067740;
+}
+
+#goLoginBtn {
+	cursor:pointer;
+	max-width:400px;
+	width:100%;
+	height:40px;
+	
+	font-size:17px;
+	
+	border:0;
+	border-radius:5px;
+	background-color:rgb(145, 145, 255);
+	color:white;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	transition:0.3s;
+}
+#goLoginBtn:hover {
+	background-color:rgb(90, 90, 255);
+}
+
+
+</style>
+<body>
+<section>
+
+	<div id="thankYouText">ERROR</div>
+	<div id="thankYouTextSmall" th:text="${message == null ? 'An unknown error has occurred' : message}"></div>
+	<img id="thankYouImg" src="/img/original/error.png">
+	<button id="goHomeBtn" onclick="document.location='/'">Home</button>
+
+</section>
+</body>
+<script>
+</script>
+</html>

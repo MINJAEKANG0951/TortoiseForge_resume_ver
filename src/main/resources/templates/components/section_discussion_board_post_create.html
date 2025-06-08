@@ -1,0 +1,287 @@
+<section th:fragment="section_discussion_board_post_create">
+<div class="content">
+	
+	<input class="modelVariable" 	type="number" id="postSeq" 	th:if="${postSeq}"	th:value="${postSeq}" readonly/>
+	
+	<input class="modelVariable" 	type="number" id="textContentTypeSeq" 			th:value="${textContentTypeSeq}" readonly/>
+	<input class="modelVariable" 	type="number" id="boldTextContentTypeSeq" 		th:value="${boldTextContentTypeSeq}" readonly/>
+	<input class="modelVariable" 	type="number" id="imageContentTypeSeq"			th:value="${imageContentTypeSeq}" readonly/>
+	
+	<input class="modelVariable" 	type="number" id="maxTextContentNumber" 		th:value="${maxTextContentNumber}" readonly/>
+	<input class="modelVariable" 	type="number" id="maxBoldTextContentNumber"		th:value="${maxBoldTextContentNumber}" readonly/>
+	<input class="modelVariable" 	type="number" id="maxImageContentNumber"		th:value="${maxImageContentNumber}" readonly/>
+	
+	<input class="modelVariable" 	type="number" id="maxPostTitleLength" 		th:value="${maxTitleLength}" readonly/>
+	<input class="modelVariable" 	type="number" id="maxTextContentLength"		th:value="${maxTextContentLength}" readonly/>
+	<input class="modelVariable" 	type="number" id="maxImgFileSize"			th:value="${maxImgFileSize}" readonly/>
+	
+	<input class="modelVariable" 	type="number" id="howmanyImagesToConvert"	th:value="${howmanyImagesToConvert}" readonly/>
+	
+	<input class="modelVariable"	type="text" id="commaReplacement"	th:value="${commaReplacement}" readonly/>
+	
+	<div 
+		class="postTypeSelectWrapper"
+		th:style="${isManagerMode} ? 'display:block' : 'display:none'">
+		<select 
+			id="postTypeSelect" 
+			class="postTypeSelect"
+			th:disabled="${!isManagerMode}">
+		    <option
+		    	th:value="${normalPostTypeSeq}"
+		    	th:selected="${postType == null || postType == normalPostTypeSeq}">post</option>		<!-- 기존값자동선택되게 ㄱ -->
+		    <option 
+		    	th:value="${announcementPostTypeSeq}"
+		    	th:selected="${postType == announcementPostTypeSeq}">announcement</option>
+		</select>
+	</div>
+	
+	
+	<div class="viewPager">
+		<div id="page1" class="viewPagerPage">
+
+			<div id="postContentWrapperContainer" class="justViewPageContainer">
+			
+
+
+				<div class="postContentWrapper">
+					<input 	
+						class="postTitle" 		
+						id="postTitle" 		
+						type="text"
+						th:value="${postTitle}"
+						th:maxLength="${maxTitleLength}"
+						placeholder="Title"
+						spellcheck="false"
+						autocomplete="off"
+						autofocus/>
+					<span class="postContentTitle">TITLE</span>
+					<div class="postContentLength">
+						<span id="postTitleCurrentLength" class="currentLength">0</span>
+						<span id="postTitleMaxLength" 		
+							class="maxLength" 
+							th:text="${maxTitleLength}"></span>
+					</div>	
+				</div>	
+				
+				
+				
+				<div 
+					class="postContentWrapper"
+					th:unless="${postSeq}">
+					<textarea 
+						class="postContent"
+						th:content-type="${textContentTypeSeq}"
+						name="textContent"
+						placeholder="Text Content"
+						spellcheck="false"
+						th:maxLength="${maxTextContentLength}"
+						rows="1"
+					></textarea>
+					<span class="postContentTitle">TEXT CONTENT</span>
+					<div class="postContentLength">
+						<span class="currentLength">0</span>
+						<span class="maxLength" th:text="${maxTextContentLength}"></span>
+					</div>	
+					<img class="postContentDelete" src="/img/mini/delete_mini.png"/>
+				</div>
+				
+				
+				
+				<div 
+					th:if="${postSeq}"
+					th:each="postContent : ${postContents}"
+					class="postContentWrapper">
+					
+					
+					<textarea 
+						th:if="${postContent.typeSeq == textContentType}"
+						class="postContent" 
+						th:content-type="${textContentTypeSeq}"
+						name="textContent"
+						placeholder="Text Content"
+						spellcheck="false"
+						th:maxLength="${maxTextContentLength}"
+						rows="1"
+						th:text="${postContent.contentValue}"
+					></textarea>
+					<textarea 
+						th:if="${postContent.typeSeq == boldTextContentType}"
+						class="postContent" 
+						th:content-type="${boldTextContentTypeSeq}"
+						name="boldTextContent"
+						placeholder="Text Content"
+						spellcheck="false"
+						th:maxLength="${maxTextContentLength}"
+						rows="1"
+						th:text="${postContent.contentValue}"
+					></textarea>
+					<div
+						th:if="${postContent.typeSeq == ImageContentType}"
+						class="postContent"
+						th:content-type="${imageContentTypeSeq}"
+						name="imgContent">
+						<img class="imgUploadImage" src="/img/mini/upload_mini.png"/>
+						<input class="imgUpload" type="file" accept="image/*"/>
+						<img class="loadedImg" th:src="${postContent.contentValue}"/>
+					</div>
+					
+					
+					<span 
+						class="postContentTitle"
+						th:if="${postContent.typeSeq == textContentType}">TEXT CONTENT</span>
+					<span 
+						class="postContentTitle"
+						th:if="${postContent.typeSeq == boldTextContentType}">TEXT CONTENT (BOLD TEXT)</span>
+					<span 
+						class="postContentTitle"
+						th:if="${postContent.typeSeq == ImageContentType}">IMAGE (jpg, png, gif)</span>
+					
+					
+					<div class="postContentLength">
+						<span class="currentLength">0</span>
+						<span 
+							class="maxLength" 
+							th:if="${postContent.typeSeq == textContentType}"
+							th:text="${maxTextContentLength}"></span>
+						<span 
+							class="maxLength"
+							th:if="${postContent.typeSeq == boldTextContentType}"
+							th:text="${maxTextContentLength}"></span>
+						<span 
+							class="maxLength" 
+							th:if="${postContent.typeSeq == ImageContentType}"
+							th:text="${maxImgFileSize}/(1024*1024) + ' MB'"></span>
+					</div>	
+					
+					
+					<img class="postContentDelete" src="/img/mini/delete_mini.png"/>
+				</div>
+
+
+
+			</div>
+
+		</div>
+	</div>
+	
+		
+	<div class="guide" id="guide"></div>	
+		
+	<div class="buttons">
+		<label 
+			id="postBtn"
+			class="viewPagerButton"
+			th:text="${postSeq == null} ? 'POST' : 'MODIFY'"></label>
+	</div>
+	
+	
+	
+	<div class="modalBackground" id="modalBackground">
+		<div class="modal">
+			<span class="modalText">waiting..</span>
+			<img class="modalImage" src="/img/mini/progressCircle_mini.png"/>
+		</div>
+	</div>
+	
+	
+
+	<div class="previewWrapper">
+		<input 	id="previewOnOff" 	class="previewOnOff" type="checkbox"/>
+		<div 	id="preview" 		class="preview">
+		
+			<div class="previewHeader">
+				<div class="empty"></div>
+				<div class="previewTitle">
+					<img src="/img/original/title_postPreview.png" class="previewTitle"/>
+					<span>POST PREVIEW</span>
+				</div>
+				
+				<label for="previewOnOff" class="previewCloseBtn"><img src="/img/original/close.png"/></label>
+			</div>
+			
+			
+			<div class="postTitle" id="postTitle_preview">POST TITLE</div>
+	
+			<div class="postInfo">
+			
+				<div class="postInfoElement" id="postWriterInfo">
+					<img class="postInfoImage" src="/img/original/tortoise_upperBody_bigger.png"/>
+					<span class="postInfoText" th:text="${session.username}"></span>
+				</div>
+				
+				<div class="postInfoElement">
+					<img class="postInfoImage" src="/img/original/pencil_smaller.png"/>
+					<span class="postInfoText" id="postCreatedTime_preview" th:text="${post_createdTime_preview != null} ? ${post_createdTime_preview} : 0"></span>
+				</div>
+		
+				<div class="postInfoElement" th:style="${postSeq == null} ? 'display:none' : 'display:flex'">
+					<img class="postInfoImage" src="/img/original/eraser.png"/>
+					<span class="postInfoText" id="postUpdatedTime_preview">00/00/0000 00:00</span>
+				</div>
+				
+				
+				<div class="postInfoElement">
+					<img class="postInfoImage" src="/img/original/eye.png"/>
+					<span class="postInfoText" th:text="${post_views_preview != null} ? ${post_views_preview} : 0"></span>
+				</div>
+				
+				
+				<div class="postInfoElement">
+					<img class="postInfoImage" src="/img/original/heart.png"/>
+					<span 
+						class="postInfoText"  
+						name="howmanyPostLikes" th:text="${post_likes_preview != null} ? ${post_likes_preview} : 0"></span>
+				</div>
+				
+		
+				<div class="postInfoElement">
+					<img class="postInfoImage" src="/img/original/comment3.png"/>
+					<span 
+						class="postInfoText" 
+						name="howmanyPostComments" th:text="${post_comments_preview != null} ? ${post_comments_preview} : 0"></span>
+				</div>
+				
+			</div>
+					
+					
+					
+			<div class="postContents" id="postContents_preview">
+				
+				<!--  
+				<div 
+					class="postContent"
+					th:if="${postContents}"
+					th:each="postContent : ${postContents}">
+					
+					<span class="postContentSeq" th:text="${postContent.contentSeq}"></span>
+					
+					<pre 	
+						th:if="${postContent.typeSeq == 0}" 
+						class="textContent"
+						th:text="${postContent.contentValue}"></pre>
+				
+					<pre  
+						th:if="${postContent.typeSeq == 1}" 
+						class="boldTextContent"
+						th:text="${postContent.contentValue}"></pre>
+				
+					<div 
+						th:if="${postContent.typeSeq == 2}" 
+						class="imageContent">
+						<img th:src="${postContent.contentValue}"/>
+					</div>
+				
+				
+				</div>
+				-->
+				
+			</div>
+			
+			
+		</div>
+		<label 	for="previewOnOff" 	class="previewBackground"></label>
+	</div>
+
+
+</div>
+</section>

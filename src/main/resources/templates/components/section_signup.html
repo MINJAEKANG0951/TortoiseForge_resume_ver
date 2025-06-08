@@ -1,0 +1,102 @@
+<section th:fragment="section_signup">
+<div class="content">
+		
+	
+	<input id="page1Radio" type="radio" name="viewPagerRadio" checked disabled/>
+	<input id="page2Radio" type="radio" name="viewPagerRadio" disabled/>
+	<input id="page3Radio" type="radio" name="viewPagerRadio" disabled/>
+	
+	
+	<div class="navBtns">
+		<img class="navBtn" src="/img/original/goBack.png" id="goBack"/>
+		<img class="navBtn" src="/img/original/home.png" id="home"/>
+	</div>
+	
+	<div class="title">
+	
+		<img class="titleImg" src="/img/original/tortoise_blacksmith_colored.png" />
+		<div class="titleText">sign up</div>
+		<div class="titleSmallText">
+		
+			<label class="page1Title"><img class="titleArrow" name="backArrow" src="/img/mini/arrow_back_mini.png"></label>
+			<label class="page1Title">step 1</label>
+			<label class="page1Title" for="page2Radio"><img class="titleArrow" name="forwardArrow" src="/img/mini/arrow_forward_mini.png"/></label>
+		
+		    <label class="page2Title" for="page1Radio"><img class="titleArrow" name="backArrow" src="/img/mini/arrow_back_mini.png"></label>
+			<label class="page2Title">step 2</label>
+			<label class="page2Title" for="page3Radio"><img class="titleArrow" name="forwardArrow" src="/img/mini/arrow_forward_mini.png"/></label>
+		
+		 	<label class="page3Title" for="page2Radio"><img class="titleArrow" name="backArrow" src="/img/mini/arrow_back_mini.png"></label>
+			<label class="page3Title">step 3</label>
+			<label class="page3Title"><img class="titleArrow" name="forwardArrow" src="/img/mini/arrow_forward_mini.png"/></label>
+		
+		</div>
+	</div>
+	
+	<div class="viewPager">
+	
+	
+		<div id="page1" class="viewPagerPage">
+			<div class="justViewPageContainer">
+			
+				<h2 class="smallTitle">Terms of Service and Privacy Policy</h2>
+				<div class="popupText" id="page1PopupText">Please review and agree to our Terms of Service and Privacy Policy to continue.</div>
+				<div class="SomethingToAgree">
+					<label for="termsOfService" class="SomethingToAgreeTitle">
+						<input class="SomethingToAgreeCheckBox" type="checkbox" id="termsOfService"/>
+						Terms of Service
+						<a class="SomeThingToAgreeLink" href="/terms">see all ></a>
+					</label>
+					<textarea class="SomethingToAgreeContent" th:text="${termsOfService}" readonly></textarea>
+				</div>
+				
+				<div class="SomethingToAgree">
+					<label for="privacyPolicy" class="SomethingToAgreeTitle">
+						<input class="SomethingToAgreeCheckBox" type="checkbox" id="privacyPolicy"/>
+						Privacy Policy
+						<a class="SomeThingToAgreeLink" href="/privacy">see all ></a>
+					</label>
+					<textarea class="SomethingToAgreeContent" th:text="${privacyPolicy}" readonly></textarea>
+				</div>
+	
+	
+				<div class="guide" id="page1Guide"></div>
+				<label id="page1Button" class="viewPagerButton">NEXT</label>
+				
+			</div>
+		</div>
+		
+		
+		<div id="page2" class="viewPagerPage">
+			<div class="justViewPageContainer">
+				<h2 class="smallTitle">Create account</h2>
+				<div class="popupText" id="page2PopupText">Please enter a username, password and email address to sign up. A verification code will be sent to your email.</div>
+				<input class="inputBox" type="text" 	id="username" 			placeholder="Username">
+				<input class="inputBox" type="password" id="password" 			placeholder="Password">
+				<input class="inputBox" type="password" id="confirmPassword" 	placeholder="Confirm Password">
+				<input class="inputBox" type="text" 	id="email" 				placeholder="Email">
+				
+				<div class="guide" id="page2Guide"></div>
+				<label id="page2Button" class="viewPagerButton">VERIFY EMAIL</label>
+			</div>	
+		</div>
+		
+		
+		
+		<div id="page3" class="viewPagerPage">
+			<div class="justViewPageContainer">
+				<h2 class="smallTitle">Verify email address</h2>
+				<div class="popupText" id="page3PopupText">The verification code has been sent to the email. Please enter the code.</div>
+				<input class="inputBox" type="text" 	id="verificationCode" 	placeholder="VERIFICATION CODE">
+				<div class="guide" id="page3Guide"></div>
+				<label 	id="page3Button" class="viewPagerButton">SUBMIT</label>
+				<label 	id="reset" 		 class="viewPagerButton">RESTART</label>
+			</div>
+		</div>
+	
+
+	</div>
+	
+	
+</div>
+</section>

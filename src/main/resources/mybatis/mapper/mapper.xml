@@ -1,0 +1,1518 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="forge.model.DAO">
+	
+	
+	
+	<!--  USER TABLE  -->
+	
+	<select id="createUser" resultType="int"><![CDATA[
+		 SELECT tortoiseForge_createUser(#{param1},#{param2},#{param3}) FROM DUAL
+	]]></select>
+	
+	
+	<select id="getUser" resultType="forge.model.UserDTO"><![CDATA[
+
+		SELECT 
+			user_seq 			AS userSeq,
+			user_name			AS username,
+			user_password		AS userPassword,
+			user_email			AS userEmail,
+			user_img			AS userImg,
+			user_about_me		AS userAboutMe,
+			user_creation_time	AS userCreationTime,
+			user_update_time	AS userUpdateTime,
+			user_status			AS userStatus,
+			role_seq			AS roleSeq
+		FROM tortoiseForge_user
+		WHERE user_name = #{param1} AND ROWNUM = 1
+		
+	]]></select>
+	
+	<select id="getUserBySeq" resultType="forge.model.UserDTO"><![CDATA[
+
+		SELECT 
+			user_seq 			AS userSeq,
+			user_name			AS username,
+			user_password		AS userPassword,
+			user_email			AS userEmail,
+			user_img			AS userImg,
+			user_about_me		AS userAboutMe,
+			user_creation_time	AS userCreationTime,
+			user_update_time	AS userUpdateTime,
+			user_status			AS userStatus,
+			role_seq			AS roleSeq
+		FROM tortoiseForge_user
+		WHERE user_seq = #{param1} AND ROWNUM = 1
+		
+	]]></select>
+	
+
+	<select id="getUserByEmail" resultType="forge.model.UserDTO"><![CDATA[
+	 
+		SELECT 
+			user_seq 			AS userSeq,
+			user_name			AS username,
+			user_password		AS userPassword,
+			user_email			AS userEmail,
+			user_img			AS userImg,
+			user_about_me		AS userAboutMe,
+			user_creation_time	AS userCreationTime,
+			user_update_time	AS userUpdateTime,
+			user_status			AS userStatus,
+			role_seq			AS roleSeq
+		FROM tortoiseForge_user
+		WHERE user_email = #{param1} AND ROWNUM = 1
+		
+	]]></select>
+	
+
+	
+	<update id="updateUserPassword"><![CDATA[
+	
+		UPDATE 	tortoiseForge_user
+		SET 	user_password 		= #{param2}
+		WHERE 	user_email 			= #{param1}
+	
+	]]></update>
+	
+	
+	
+	
+	
+	
+	
+	
+	<!--  POST TABLE  -->
+	
+	<select id="getAnnouncements" resultType="forge.model.discussionboard.PostDTO"><![CDATA[
+		WITH 
+		PostLikes AS 
+		(
+		    SELECT 
+		        p.post_seq, 
+		        COUNT(l.post_seq) AS post_likes
+		    FROM 
+		        tortoiseForge_discussionBoard_post p
+		    LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_like l ON p.post_seq = l.post_seq
+		    GROUP BY 
+		        p.post_seq
+		),
+		PostComments AS (
+		    SELECT 
+		        p.post_seq, 
+		        COUNT(c.post_seq) AS post_comments
+		    FROM 
+		        tortoiseForge_discussionBoard_post p
+		    LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_comment c ON p.post_seq = c.post_seq
+		    GROUP BY 
+		        p.post_seq
+		),
+		PostImages AS (
+			SELECT
+				p.post_seq,
+				COUNT(i.content_seq) AS post_images
+			FROM
+				tortoiseForge_discussionBoard_post p
+		 	LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_content i ON p.post_seq = i.post_seq
+   		    WHERE 
+		    	i.type_seq = 2	    
+		    GROUP BY
+		    	p.post_seq
+		),
+		RankedPosts AS (
+		    SELECT 
+		        ROW_NUMBER() OVER (ORDER BY p.post_seq DESC) AS postNumber,
+		        p.post_seq,
+		        p.type_seq,
+		        p.post_title,
+		        p.post_creation_time,
+		        p.post_updated_time,
+		        p.post_views,
+		        p.user_seq,
+		        pl.post_likes,
+		        pc.post_comments,
+		        COALESCE(pi.post_images, 0) AS post_images
+		    FROM 
+		        tortoiseForge_discussionBoard_post p
+		    LEFT JOIN 
+		        PostLikes pl ON p.post_seq = pl.post_seq
+		    LEFT JOIN 
+		        PostComments pc ON p.post_seq = pc.post_seq
+		    LEFT JOIN
+		    	PostImages pi ON p.post_seq = pi.post_seq      
+	        WHERE p.type_seq = 1
+		)
+		SELECT 
+		    rp.postNumber,
+		    rp.post_seq AS postSeq,
+		    rp.type_seq AS typeSeq,
+		    rp.post_title AS postTitle,
+		    rp.post_creation_time AS postCreationTime,
+		    rp.post_updated_time AS postUpdatedTime,
+		    rp.post_views AS postViews,
+		    rp.user_seq AS userSeq,
+		    rp.post_likes AS likes,
+		    rp.post_comments AS comments,
+		    rp.post_images AS howmanyImages,
+		    u.user_name AS username
+		FROM 
+		    RankedPosts rp
+		JOIN 
+		    tortoiseForge_user u ON rp.user_seq = u.user_seq
+		ORDER BY 
+		    rp.post_seq DESC
+		
+	]]></select>
+	
+	<select id="getPosts" resultType="forge.model.discussionboard.PostDTO"><![CDATA[
+	
+		WITH 
+		PostLikes AS 
+		(
+		    SELECT 
+		        p.post_seq, 
+		        COUNT(l.post_seq) AS post_likes
+		    FROM 
+		        tortoiseForge_discussionBoard_post p
+		    LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_like l ON p.post_seq = l.post_seq
+		    GROUP BY 
+		        p.post_seq
+		),
+		PostComments AS (
+		    SELECT 
+		        p.post_seq, 
+		        COUNT(c.post_seq) AS post_comments
+		    FROM 
+		        tortoiseForge_discussionBoard_post p
+		    LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_comment c ON p.post_seq = c.post_seq
+		    GROUP BY 
+		        p.post_seq
+		),
+		PostImages AS (
+			SELECT
+				p.post_seq,
+				COUNT(i.content_seq) AS post_images
+			FROM
+				tortoiseForge_discussionBoard_post p
+		 	LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_content i ON p.post_seq = i.post_seq
+   		    WHERE 
+		    	i.type_seq = 2	    
+		    GROUP BY
+		    	p.post_seq
+		),
+		RankedPosts AS (
+		    SELECT 
+		        ROW_NUMBER() OVER (ORDER BY p.post_seq DESC) AS postNumber,
+		        p.post_seq,
+		        p.type_seq,
+		        p.post_title,
+		        p.post_creation_time,
+		        p.post_updated_time,
+		        p.post_views,
+		        p.user_seq,
+		        pl.post_likes,
+		        pc.post_comments,
+		        COALESCE(pi.post_images, 0) AS post_images
+		    FROM 
+		        tortoiseForge_discussionBoard_post p
+		    LEFT JOIN 
+		        PostLikes pl ON p.post_seq = pl.post_seq
+		    LEFT JOIN 
+		        PostComments pc ON p.post_seq = pc.post_seq
+		    LEFT JOIN
+		    	PostImages pi ON p.post_seq = pi.post_seq
+	        WHERE p.type_seq = 0
+		)
+		SELECT 
+		    rp.postNumber,
+		    rp.post_seq AS postSeq,
+		    rp.type_seq AS typeSeq,
+		    rp.post_title AS postTitle,
+		    rp.post_creation_time AS postCreationTime,
+		    rp.post_updated_time AS postUpdatedTime,
+		    rp.post_views AS postViews,
+		    rp.user_seq AS userSeq,
+		    rp.post_likes AS likes,
+		    rp.post_comments AS comments,
+		    rp.post_images AS howmanyImages,
+		    u.user_name AS username
+		FROM 
+		    RankedPosts rp
+		JOIN 
+		    tortoiseForge_user u ON rp.user_seq = u.user_seq
+		WHERE 
+		    rp.postNumber BETWEEN (#{pageSize} * (#{pageNum} - 1) + 1) AND (#{pageSize} * #{pageNum})
+		ORDER BY 
+		    rp.post_seq DESC
+		    
+	]]></select>
+	
+	
+	
+	<select id="getPostsByTitle" resultType="forge.model.discussionboard.PostDTO"><![CDATA[
+	
+		WITH 
+		PostLikes AS 
+		(
+		    SELECT 
+		        p.post_seq, 
+		        COUNT(l.post_seq) AS post_likes
+		    FROM 
+		        tortoiseForge_discussionBoard_post p
+		    LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_like l ON p.post_seq = l.post_seq
+		    GROUP BY 
+		        p.post_seq
+		),
+		PostComments AS (
+		    SELECT 
+		        p.post_seq, 
+		        COUNT(c.post_seq) AS post_comments
+		    FROM 
+		        tortoiseForge_discussionBoard_post p
+		    LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_comment c ON p.post_seq = c.post_seq
+		    GROUP BY 
+		        p.post_seq
+		),
+		PostImages AS (
+			SELECT
+				p.post_seq,
+				COUNT(i.content_seq) AS post_images
+			FROM
+				tortoiseForge_discussionBoard_post p
+		 	LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_content i ON p.post_seq = i.post_seq
+   		    WHERE 
+		    	i.type_seq = 2	    
+		    GROUP BY
+		    	p.post_seq
+		),
+		RankedPosts AS (
+		    SELECT 
+		        ROW_NUMBER() OVER (ORDER BY p.post_seq DESC) AS postNumber,
+		        p.post_seq,
+		        p.type_seq,
+		        p.post_title,
+		        p.post_creation_time,
+		        p.post_updated_time,
+		        p.post_views,
+		        p.user_seq,
+		        pl.post_likes,
+		        pc.post_comments,
+		        COALESCE(pi.post_images, 0) AS post_images
+		    FROM 
+		        tortoiseForge_discussionBoard_post p
+		    LEFT JOIN 
+		        PostLikes pl ON p.post_seq = pl.post_seq
+		    LEFT JOIN 
+		        PostComments pc ON p.post_seq = pc.post_seq
+   		    LEFT JOIN
+		    	PostImages pi ON p.post_seq = pi.post_seq    
+            WHERE
+            	p.type_seq = 0
+           	AND
+                p.post_title LIKE '%' || #{searchQuery} || '%'
+		)
+		SELECT 
+		    rp.postNumber,
+		    rp.post_seq AS postSeq,
+		    rp.type_seq AS typeSeq,
+		    rp.post_title AS postTitle,
+		    rp.post_creation_time AS postCreationTime,
+		    rp.post_updated_time AS postUpdatedTime,
+		    rp.post_views AS postViews,
+		    rp.user_seq AS userSeq,
+		    rp.post_likes AS likes,
+		    rp.post_comments AS comments,
+		    rp.post_images AS howmanyImages,
+		    u.user_name AS username
+		FROM 
+		    RankedPosts rp
+		JOIN 
+		    tortoiseForge_user u ON rp.user_seq = u.user_seq
+		WHERE 
+		    rp.postNumber BETWEEN (#{pageSize} * (#{pageNum} - 1) + 1) AND (#{pageSize} * #{pageNum})
+		ORDER BY 
+		    rp.post_seq DESC
+
+	]]></select>
+	
+	
+	
+	<select id="getPostsByContent" resultType="forge.model.discussionboard.PostDTO"><![CDATA[
+	
+		WITH 
+		PostLikes AS 
+		(
+		    SELECT 
+		        p.post_seq, 
+		        COUNT(l.post_seq) AS post_likes
+		    FROM 
+		        tortoiseForge_discussionBoard_post p
+		    LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_like l ON p.post_seq = l.post_seq
+		    GROUP BY 
+		        p.post_seq
+		),
+		PostComments AS (
+		    SELECT 
+		        p.post_seq, 
+		        COUNT(c.post_seq) AS post_comments
+		    FROM 
+		        tortoiseForge_discussionBoard_post p
+		    LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_comment c ON p.post_seq = c.post_seq
+		    GROUP BY 
+		        p.post_seq
+		),
+		PostImages AS (
+			SELECT
+				p.post_seq,
+				COUNT(i.content_seq) AS post_images
+			FROM
+				tortoiseForge_discussionBoard_post p
+		 	LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_content i ON p.post_seq = i.post_seq
+   		    WHERE 
+		    	i.type_seq = 2	    
+		    GROUP BY
+		    	p.post_seq
+		),
+		RankedPosts AS (
+		    SELECT 
+		        ROW_NUMBER() OVER (ORDER BY p.post_seq DESC) AS postNumber,
+		        p.post_seq,
+		        p.type_seq,
+		        p.post_title,
+		        p.post_creation_time,
+		        p.post_updated_time,
+		        p.post_views,
+		        p.user_seq,
+		        pl.post_likes,
+		        pc.post_comments,
+		        COALESCE(pi.post_images, 0) AS post_images
+		    FROM 
+		        tortoiseForge_discussionBoard_post p
+		    LEFT JOIN 
+		        PostLikes pl ON p.post_seq = pl.post_seq
+		    LEFT JOIN 
+		        PostComments pc ON p.post_seq = pc.post_seq
+        	LEFT JOIN
+		    	PostImages pi ON p.post_seq = pi.post_seq
+		    LEFT JOIN
+		    	tortoiseForge_discussionBoard_post_content ct ON p.post_seq = ct.post_seq
+            WHERE
+            	p.type_seq = 0
+            AND 
+                (ct.type_seq = 0 OR ct.type_seq = 1)
+            AND 		
+                ct.content_value LIKE '%' || #{searchQuery} || '%'
+            GROUP BY     
+                p.post_seq,
+		        p.type_seq,
+		        p.post_title,
+		        p.post_creation_time,
+		        p.post_updated_time,
+		        p.post_views,
+		        p.user_seq,
+		        pl.post_likes,
+		        pc.post_comments,
+                post_images
+		)
+		SELECT 
+		    rp.postNumber,
+		    rp.post_seq AS postSeq,
+		    rp.type_seq AS typeSeq,
+		    rp.post_title AS postTitle,
+		    rp.post_creation_time AS postCreationTime,
+		    rp.post_updated_time AS postUpdatedTime,
+		    rp.post_views AS postViews,
+		    rp.user_seq AS userSeq,
+		    rp.post_likes AS likes,
+		    rp.post_comments AS comments,
+		    rp.post_images AS howmanyImages,
+		    u.user_name AS username
+		FROM 
+		    RankedPosts rp
+		JOIN 
+		    tortoiseForge_user u ON rp.user_seq = u.user_seq
+		WHERE 
+		    rp.postNumber BETWEEN (#{pageSize} * (#{pageNum} - 1) + 1) AND (#{pageSize} * #{pageNum})
+		ORDER BY 
+		    rp.post_seq DESC
+		
+	]]></select>
+	
+	
+	
+	<select id="getPostsByTitleAndContent" resultType="forge.model.discussionboard.PostDTO"><![CDATA[
+		
+		WITH 
+		PostLikes AS 
+		(
+		    SELECT 
+		        p.post_seq, 
+		        COUNT(l.post_seq) AS post_likes
+		    FROM 
+		        tortoiseForge_discussionBoard_post p
+		    LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_like l ON p.post_seq = l.post_seq
+		    GROUP BY 
+		        p.post_seq
+		),
+		PostComments AS (
+		    SELECT 
+		        p.post_seq, 
+		        COUNT(c.post_seq) AS post_comments
+		    FROM 
+		        tortoiseForge_discussionBoard_post p
+		    LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_comment c ON p.post_seq = c.post_seq
+		    GROUP BY 
+		        p.post_seq
+		),
+		PostImages AS (
+			SELECT
+				p.post_seq,
+				COUNT(i.content_seq) AS post_images
+			FROM
+				tortoiseForge_discussionBoard_post p
+		 	LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_content i ON p.post_seq = i.post_seq
+   		    WHERE 
+		    	i.type_seq = 2	    
+		    GROUP BY
+		    	p.post_seq
+		),
+		RankedPosts AS (
+		    SELECT 
+		        ROW_NUMBER() OVER (ORDER BY p.post_seq DESC) AS postNumber,
+		        p.post_seq,
+		        p.type_seq,
+		        p.post_title,
+		        p.post_creation_time,
+		        p.post_updated_time,
+		        p.post_views,
+		        p.user_seq,
+		        pl.post_likes,
+		        pc.post_comments,
+		        COALESCE(pi.post_images, 0) AS post_images
+		    FROM 
+		        tortoiseForge_discussionBoard_post p
+		    LEFT JOIN 
+		        PostLikes pl ON p.post_seq = pl.post_seq
+		    LEFT JOIN 
+		        PostComments pc ON p.post_seq = pc.post_seq
+        	LEFT JOIN
+		    	PostImages pi ON p.post_seq = pi.post_seq
+		    LEFT JOIN
+		    	tortoiseForge_discussionBoard_post_content ct ON p.post_seq = ct.post_seq
+            WHERE
+            	p.type_seq = 0
+            AND 
+                (
+                	( (ct.type_seq = 0 OR ct.type_seq = 1) AND ct.content_value LIKE '%' || #{searchQuery} || '%' )
+                	OR
+                	p.post_title LIKE '%' || #{searchQuery} || '%'
+                )
+            GROUP BY     
+                p.post_seq,
+		        p.type_seq,
+		        p.post_title,
+		        p.post_creation_time,
+		        p.post_updated_time,
+		        p.post_views,
+		        p.user_seq,
+		        pl.post_likes,
+		        pc.post_comments,
+                post_images
+		)
+		SELECT 
+		    rp.postNumber,
+		    rp.post_seq AS postSeq,
+		    rp.type_seq AS typeSeq,
+		    rp.post_title AS postTitle,
+		    rp.post_creation_time AS postCreationTime,
+		    rp.post_updated_time AS postUpdatedTime,
+		    rp.post_views AS postViews,
+		    rp.user_seq AS userSeq,
+		    rp.post_likes AS likes,
+		    rp.post_comments AS comments,
+		    rp.post_images AS howmanyImages,
+		    u.user_name AS username
+		FROM 
+		    RankedPosts rp
+		JOIN 
+		    tortoiseForge_user u ON rp.user_seq = u.user_seq
+		WHERE 
+		    rp.postNumber BETWEEN (#{pageSize} * (#{pageNum} - 1) + 1) AND (#{pageSize} * #{pageNum})
+		ORDER BY 
+		    rp.post_seq DESC
+		
+	]]></select>
+	
+	
+	
+	<select id="getPostsByUsername" resultType="forge.model.discussionboard.PostDTO"><![CDATA[
+	
+        WITH 
+        PostLikes AS 
+        (
+            SELECT 
+                p.post_seq, 
+                COUNT(l.post_seq) AS post_likes
+            FROM 
+                tortoiseForge_discussionBoard_post p
+            LEFT JOIN 
+                tortoiseForge_discussionBoard_post_like l ON p.post_seq = l.post_seq
+            GROUP BY 
+                p.post_seq
+        ),
+        PostComments AS (
+            SELECT 
+                p.post_seq, 
+                COUNT(c.post_seq) AS post_comments
+            FROM 
+                tortoiseForge_discussionBoard_post p
+            LEFT JOIN 
+                tortoiseForge_discussionBoard_post_comment c ON p.post_seq = c.post_seq
+            GROUP BY 
+                p.post_seq
+        ),
+        PostImages AS (
+			SELECT
+				p.post_seq,
+				COUNT(i.content_seq) AS post_images
+			FROM
+				tortoiseForge_discussionBoard_post p
+		 	LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_content i ON p.post_seq = i.post_seq
+   		    WHERE 
+		    	i.type_seq = 2	    
+		    GROUP BY
+		    	p.post_seq
+		),
+        RankedPosts AS (
+            SELECT 
+                ROW_NUMBER() OVER (ORDER BY p.post_seq DESC) AS postNumber,
+                p.post_seq,
+                p.type_seq,
+                p.post_title,
+                p.post_creation_time,
+                p.post_updated_time,
+                p.post_views,
+                p.user_seq,
+                pl.post_likes,
+                pc.post_comments,
+               	COALESCE(pi.post_images, 0) AS post_images,
+                u.user_name
+            FROM 
+                tortoiseForge_discussionBoard_post p
+            LEFT JOIN 
+                PostLikes pl ON p.post_seq = pl.post_seq
+            LEFT JOIN 
+                PostComments pc ON p.post_seq = pc.post_seq
+            LEFT JOIN
+		    	PostImages pi ON p.post_seq = pi.post_seq
+            JOIN 
+                tortoiseForge_user u ON p.user_seq = u.user_seq
+            WHERE
+            	p.type_seq = 0
+           	AND
+                u.user_name LIKE '%' || #{searchQuery} || '%'
+        )
+        SELECT 
+            rp.postNumber,
+            rp.post_seq AS postSeq,
+            rp.type_seq AS typeSeq,
+            rp.post_title AS postTitle,
+            rp.post_creation_time AS postCreationTime,
+            rp.post_updated_time AS postUpdatedTime,
+            rp.post_views AS postViews,
+            rp.user_seq AS userSeq,
+            rp.post_likes AS likes,
+            rp.post_comments AS comments,
+            rp.post_images AS howmanyImages,
+            rp.user_name AS username
+        FROM 
+            RankedPosts rp
+        WHERE 
+            rp.postNumber BETWEEN (#{pageSize} * (#{pageNum} - 1) + 1) AND (#{pageSize} * #{pageNum})
+        ORDER BY 
+            rp.post_seq DESC
+            
+    ]]></select>
+	
+	
+	<select id="getCommentsByContent" resultType="forge.model.discussionboard.PostCommentDTO"><![CDATA[
+		
+		WITH
+		PostImages AS (
+			SELECT
+				p.post_seq,
+				COUNT(i.content_seq) AS post_images
+			FROM
+				tortoiseForge_discussionBoard_post p
+		 	LEFT JOIN 
+		        tortoiseForge_discussionBoard_post_content i ON p.post_seq = i.post_seq
+   		    WHERE 
+		    	i.type_seq = 2	    
+		    GROUP BY
+		    	p.post_seq
+		),
+		FilteredComments AS (
+			SELECT 
+				ROW_NUMBER() OVER (ORDER BY c.comment_seq DESC) AS commentNumber,
+			    c.comment_seq,
+			    c.comment_content,
+			    c.comment_creation_time,
+			    c.comment_updated_time,
+			    c.post_seq,
+			    c.user_seq,
+			    c.parent_comment_seq,
+			    c.target_comment_seq,
+			    p.post_title,
+			    p.type_seq,
+				COALESCE(pi.post_images, 0) AS post_images,
+			    u.user_name
+			FROM		tortoiseForge_discussionBoard_post_comment c
+			
+			LEFT JOIN 	tortoiseForge_discussionBoard_post p
+			ON  		c.post_seq = p.post_seq
+			    
+			LEFT JOIN	tortoiseForge_user u
+			ON			c.user_seq = u.user_seq
+			
+            LEFT JOIN	PostImages pi 
+            ON 			c.post_seq = pi.post_seq
+			
+			WHERE 		c.comment_content like '%'|| #{searchQuery} || '%'
+			
+		)
+        SELECT 
+            
+            fc.commentNumber AS commentNumber,
+            fc.comment_seq	AS commentSeq,
+            fc.comment_content AS commentContent,
+            fc.comment_creation_time AS commentCreationTime,
+            fc.comment_updated_time AS commentUpdatedTime,
+            fc.post_seq AS postSeq,
+            fc.user_seq AS userSeq,
+            fc.parent_comment_seq AS parentCommentSeq,
+            fc.target_comment_seq AS targetCommentSeq,
+            fc.post_title AS postTitle,
+            fc.type_seq AS postType,
+            fc.user_name AS username,
+            fc.post_images AS howmanyImages
+            
+        FROM 
+            FilteredComments fc
+        WHERE 
+            fc.commentNumber BETWEEN (#{pageSize} * (#{pageNum} - 1) + 1) AND (#{pageSize} * #{pageNum})
+        ORDER BY 
+            fc.comment_seq DESC
+
+	]]></select>
+	
+	<select id="countPosts" resultType="int"><![CDATA[
+	
+		SELECT 	COUNT(*) 
+		FROM 	tortoiseForge_discussionBoard_post
+		WHERE 	type_seq = 0
+	
+	]]></select>
+	
+	
+	<select id="countPostsByTitle" resultType="int"><![CDATA[
+	
+		SELECT 	COUNT(*) 
+		FROM 	tortoiseForge_discussionBoard_post
+		WHERE	type_seq = 0
+		AND   	post_title like '%' || #{searchQuery} || '%'	
+	
+	]]></select>
+	
+	
+	<select id="countPostsByContent" resultType="int"><![CDATA[
+			
+		SELECT 		COUNT(DISTINCT p.post_seq)
+		FROM 		tortoiseForge_discussionBoard_post p
+		LEFT JOIN 	tortoiseForge_discussionBoard_post_content c ON p.post_seq = c.post_seq
+		WHERE 		p.type_seq = 0
+		AND 		(c.type_seq = 0 OR c.type_seq = 1)
+		AND 		c.content_value LIKE '%' || #{searchQuery} || '%'
+	
+	]]></select>
+	
+	
+	<select id="countPostsByTitleAndContent" resultType="int"><![CDATA[
+	
+		SELECT 		COUNT(DISTINCT p.post_seq)
+		FROM 		tortoiseForge_discussionBoard_post p
+		LEFT JOIN 	tortoiseForge_discussionBoard_post_content c ON p.post_seq = c.post_seq
+        WHERE
+        			p.type_seq = 0
+        AND 
+		            (
+		            	( (c.type_seq = 0 OR c.type_seq = 1) AND c.content_value LIKE '%' || #{searchQuery} || '%' )
+		            	OR
+		            	p.post_title LIKE '%' || #{searchQuery} || '%'
+		            )
+							
+	]]></select>
+	
+	
+	<select id="countPostsByUsername" resultType="int"><![CDATA[
+	
+		SELECT COUNT(*)
+		FROM 		tortoiseForge_discussionBoard_post p
+		LEFT JOIN 	tortoiseForge_user u ON p.user_seq = u.user_seq
+		WHERE 		type_seq = 0
+		AND			u.user_name like '%' || #{searchQuery} || '%'
+	
+	]]></select>
+	
+	
+	<select id="countCommentsByContent" resultType="int"><![CDATA[
+	
+		SELECT COUNT(*)
+		FROM 		tortoiseForge_discussionBoard_post_comment
+		WHERE 		comment_content like '%' || #{searchQuery} || '%'
+	
+	]]></select>
+	
+	
+
+
+
+
+	<insert id="createPost"><![CDATA[
+		
+		INSERT INTO tortoiseForge_discussionBoard_post (type_seq, post_title, user_seq)
+		VALUES (#{postType}, #{postTitle}, #{userSeq})
+		
+	]]></insert>
+
+	<delete id="deletePost"><![CDATA[
+		
+		DELETE FROM tortoiseForge_discussionBoard_post
+		WHERE post_seq = #{postSeq} AND user_seq = #{userSeq}
+		
+	]]></delete>
+	
+
+	<update id="updatePost"><![CDATA[
+		
+		UPDATE tortoiseForge_discussionBoard_post
+		SET	
+			type_seq 			= #{postType},
+			post_title 			= #{postTitle},
+			post_updated_time 	= CURRENT_TIMESTAMP AT TIME ZONE 'UTC'
+		WHERE post_seq 	= #{postSeq} AND user_seq = #{userSeq}
+		
+	]]></update>
+	
+
+	<insert id="createPostContent"><![CDATA[
+		
+		INSERT INTO tortoiseForge_discussionBoard_post_content (post_seq, type_seq, content_value)
+		VALUES (#{postSeq}, #{contentType}, #{value})
+		
+	]]></insert>
+	
+	<delete id="deletePostContents"><![CDATA[
+	
+		DELETE FROM tortoiseForge_discussionBoard_post_content
+		WHERE post_seq = #{postSeq}
+	
+	]]></delete>
+	
+	
+
+	<select id="getTheLastPost" resultType="forge.model.discussionboard.PostDTO"><![CDATA[
+		
+       SELECT 
+       
+			post_seq 			AS postSeq,
+			type_seq 			AS typeSeq,
+			post_title 			AS postTitle,
+			post_creation_time 	AS postCreationTime,
+       		post_updated_time	AS postUpadtedTime,
+       		post_views 			AS postViews,
+       		user_seq			AS userSeq
+       		
+       FROM (
+            SELECT * 
+            FROM tortoiseForge_discussionBoard_post 
+            WHERE user_seq = #{userSeq}
+            ORDER BY post_creation_time DESC
+        )
+        WHERE ROWNUM = 1
+		
+	]]></select>
+	
+	
+	
+	<update id="increasePostViews"><![CDATA[
+		
+		UPDATE tortoiseForge_discussionBoard_post
+		SET post_views = post_views + 1
+		WHERE post_seq = #{postSeq}
+		
+	]]></update>
+	
+	
+	
+	
+	<select id="getPost" resultType="forge.model.discussionboard.PostDTO"><![CDATA[
+		
+		SELECT 
+		    postSeq,
+		    typeSeq,
+		    postTitle,
+		    postCreationTime,
+		    postUpdatedTime,
+		    postViews,
+		    userSeq,
+		    username
+		FROM (
+		    SELECT 
+		        p.post_seq 				AS postSeq,
+		        p.type_seq 				AS typeSeq,
+		        p.post_title 			AS postTitle,
+		        p.post_creation_time 	AS postCreationTime,
+		        p.post_updated_time		AS postUpdatedTime,
+		        p.post_views 			AS postViews,
+		        p.user_seq				AS userSeq,
+		        u.user_name				AS username,
+		        ROWNUM AS rnum
+		    FROM 		tortoiseForge_discussionBoard_post p
+		    LEFT JOIN	tortoiseForge_user u
+		    ON			p.user_seq = u.user_seq			
+		    WHERE p.post_seq = #{postSeq}
+		)
+		WHERE rnum = 1
+		
+	]]></select>
+	
+
+	<select id="getPostContents" resultType="forge.model.discussionboard.PostContentDTO"><![CDATA[
+		
+		SELECT
+			
+			content_seq 	AS contentSeq,
+			content_value 	AS contentValue,
+			type_seq 		AS typeSeq,
+			post_seq 		AS postSeq
+		
+		FROM 
+		
+			tortoiseForge_discussionBoard_post_content
+		
+		WHERE post_seq = #{postSeq}
+		
+		ORDER BY content_seq
+		
+	]]></select>
+
+
+	<select id="getPostLikes" resultType="forge.model.discussionboard.PostLikeDTO"><![CDATA[
+		
+		SELECT
+			
+			like_seq 	AS likeSeq,
+			post_seq 	AS postSeq,
+			user_seq 	AS userSeq,
+			like_time 	AS likeTime
+		
+		FROM 
+		
+			tortoiseForge_discussionBoard_post_like
+		
+		WHERE post_seq = #{postSeq}
+		
+	]]></select>
+
+
+	<select id="getPostComments" resultType="forge.model.discussionboard.PostCommentDTO"><![CDATA[
+		
+		SELECT
+		    c.comment_seq             AS commentSeq,
+		    c.comment_content         AS commentContent,
+		    c.comment_creation_time   AS commentCreationTime,
+		    c.comment_updated_time    AS commentUpdatedTime,
+		    c.post_seq                AS postSeq,
+		    c.user_seq                AS userSeq,
+		    c.parent_comment_seq      AS parentCommentSeq,
+		    c.target_comment_seq	  AS targetCommentSeq,
+		    u.user_name               AS username,
+		    u.user_img				  AS userImg,
+		    COUNT(l.comment_seq)      AS likes
+		FROM
+		    tortoiseForge_discussionBoard_post_comment c
+		LEFT JOIN
+		    tortoiseForge_user u ON c.user_seq = u.user_seq
+		LEFT JOIN
+		    tortoiseForge_discussionBoard_post_comment_like l ON c.comment_seq = l.comment_seq
+		WHERE
+		    c.post_seq = #{postSeq}
+		GROUP BY
+		    c.comment_seq,
+		    c.comment_content,
+		    c.comment_creation_time,
+		    c.comment_updated_time,
+		    c.post_seq,
+		    c.user_seq,
+		    c.parent_comment_seq,
+		    c.target_comment_seq,
+		    u.user_name,
+		    u.user_img
+		ORDER BY commentSeq
+		
+	]]></select>
+	
+	
+	<select id="getPostCommentsWhenUserLoggined" resultType="forge.model.discussionboard.PostCommentDTO"><![CDATA[
+		
+		SELECT
+		    c.comment_seq             AS commentSeq,
+		    c.comment_content         AS commentContent,
+		    c.comment_creation_time   AS commentCreationTime,
+		    c.comment_updated_time    AS commentUpdatedTime,
+		    c.post_seq                AS postSeq,
+		    c.user_seq                AS userSeq,
+		    c.parent_comment_seq      AS parentCommentSeq,
+		    c.target_comment_seq	  AS targetCommentSeq,
+		    u.user_name               AS username,
+		    u.user_img				  AS userImg,
+		    COUNT(l.comment_seq)      AS likes,
+		    CASE 
+		        WHEN ul.like_seq IS NOT NULL THEN 1 
+		        ELSE 0
+		   	END AS isLiked,
+		   	
+		   	CASE 
+		        WHEN c.user_seq = #{userSeq} THEN 1 
+		        ELSE 0
+		   	END AS isUserComment
+		   	
+		FROM
+		    tortoiseForge_discussionBoard_post_comment c
+		LEFT JOIN
+		    tortoiseForge_user u ON c.user_seq = u.user_seq
+		LEFT JOIN
+		    tortoiseForge_discussionBoard_post_comment_like l ON c.comment_seq = l.comment_seq
+		LEFT JOIN
+		    tortoiseForge_discussionBoard_post_comment_like ul ON c.comment_seq = ul.comment_seq
+			AND ul.user_seq = #{userSeq}
+		WHERE
+		    c.post_seq = #{postSeq}
+		GROUP BY
+		    c.comment_seq,
+		    c.comment_content,
+		    c.comment_creation_time,
+		    c.comment_updated_time,
+		    c.post_seq,
+		    c.user_seq,
+		    c.parent_comment_seq,
+		    c.target_comment_seq,
+		    u.user_name,
+		    u.user_img,
+            ul.like_seq
+		ORDER BY commentSeq
+		
+		
+	]]></select>
+	
+	
+	<select id="getPostLike" resultType="forge.model.discussionboard.PostLikeDTO"><![CDATA[
+		
+		SELECT 
+			like_seq AS likeSeq,
+			post_seq AS postSeq,
+			user_seq AS userSeq,
+			like_time AS likeTime
+        FROM tortoiseForge_discussionBoard_post_like
+        WHERE post_seq = #{postSeq} AND user_seq = #{userSeq}
+        AND ROWNUM = 1
+
+	]]></select>
+	
+	
+	<insert id="doPostLike"><![CDATA[
+		
+		INSERT INTO tortoiseForge_discussionBoard_post_like (post_seq, user_seq)
+		VALUES (#{postSeq}, #{userSeq})
+		
+	]]></insert>
+	
+	
+	<insert id="cancelPostLike"><![CDATA[
+		
+		DELETE FROM tortoiseForge_discussionBoard_post_like 
+		WHERE post_seq = #{postSeq} AND user_seq = #{userSeq}
+		
+	]]></insert>
+	
+	
+	<select id="getComment" resultType="forge.model.discussionboard.PostCommentDTO"><![CDATA[
+		
+		SELECT 
+			c.comment_seq             	AS commentSeq,
+			c.comment_content         	AS commentContent,
+			c.comment_creation_time   	AS commentCreationTime,
+			c.comment_updated_time    	AS commentUpdatedTime,
+			c.user_seq                	AS userSeq,
+			c.post_seq					AS postSeq,
+			c.parent_comment_seq      	AS parentCommentSeq,
+			c.target_comment_seq	  	AS targetCommentSeq,
+			u.user_name					AS username
+			
+        FROM 		tortoiseForge_discussionBoard_post_comment c
+        LEFT JOIN 	tortoiseForge_user u
+        ON			c.user_seq = u.user_seq
+        
+        WHERE c.comment_seq = #{commentSeq}
+        AND ROWNUM = 1
+		
+	]]></select>
+	
+	
+	<insert id="addComment" statementType="CALLABLE"><![CDATA[
+		{
+			call tortoiseForge_discussionBoard_add_comment
+			(
+	            #{params.userSeq, 			mode=IN, jdbcType=INTEGER},
+	            #{params.postSeq, 			mode=IN, jdbcType=INTEGER},
+	            #{params.subjectCommentSeq, mode=IN, jdbcType=INTEGER},
+	            #{params.commentContent, 	mode=IN, jdbcType=VARCHAR},
+	            #{params.result, 			mode=OUT, jdbcType=INTEGER}
+       		)
+        }
+	]]></insert>
+	
+
+	<delete id="deleteComment" statementType="CALLABLE"><![CDATA[
+		{
+			call tortoiseForge_discussionBoard_delete_comment
+			(
+	            #{params.userSeq, 			mode=IN, jdbcType=INTEGER},
+	            #{params.postSeq, 			mode=IN, jdbcType=INTEGER},
+	            #{params.subjectCommentSeq, mode=IN, jdbcType=INTEGER},
+	            #{params.result, 			mode=OUT, jdbcType=INTEGER}
+       		)
+        }
+	]]></delete>
+	
+	
+	<delete id="updateComment" statementType="CALLABLE"><![CDATA[
+		{
+			call tortoiseForge_discussionBoard_update_comment
+			(
+	            #{params.userSeq, 			mode=IN, jdbcType=INTEGER},
+	            #{params.postSeq, 			mode=IN, jdbcType=INTEGER},
+	            #{params.subjectCommentSeq, mode=IN, jdbcType=INTEGER},
+	            #{params.commentContent, 	mode=IN, jdbcType=VARCHAR},
+	            #{params.result, 			mode=OUT, jdbcType=INTEGER}
+       		)
+        }
+	]]></delete>
+	
+	
+	
+	
+	<select id="getCommentLike" resultType="forge.model.discussionboard.PostCommentLikeDTO"><![CDATA[
+		 SELECT 
+		 
+		 	like_seq 	AS likeSeq,
+		 	comment_seq AS commentSeq,
+		 	user_seq 	AS userSeq,
+		 	like_time 	AS likeTime
+		 
+		 FROM tortoiseForge_discussionBoard_post_comment_like
+		 WHERE comment_seq = #{commentSeq} AND user_seq = #{userSeq}
+	]]></select>
+	
+	
+	<insert id="doCommentLike"><![CDATA[
+		
+		INSERT INTO 
+		tortoiseForge_discussionBoard_post_comment_like
+		(
+			comment_seq, 
+			user_seq
+		) 
+		VALUES
+		(
+			#{commentSeq},
+			#{userSeq}
+		)
+		
+	]]></insert>
+	
+	
+	<delete id="cancelCommentLike"><![CDATA[
+		
+		DELETE FROM 
+		tortoiseForge_discussionBoard_post_comment_like
+		WHERE comment_seq = #{commentSeq} AND user_seq = #{userSeq}
+		
+	]]></delete>
+	
+	<select id="countCommentLikes" resultType="int"><![CDATA[
+	
+		 SELECT COUNT(*)
+		 FROM tortoiseForge_discussionBoard_post_comment_like
+		 WHERE comment_seq = #{commentSeq}
+		 
+	]]></select>
+	
+	
+
+
+
+	<delete id="deleteChildPostComments"><![CDATA[
+	
+		DELETE FROM
+		tortoiseForge_discussionBoard_post_comment
+		WHERE parent_comment_seq = #{parentCommentSeq}
+	
+	]]></delete>
+	
+	<update id="updateTargetingCommentContent"><![CDATA[
+	
+		UPDATE tortoiseForge_discussionBoard_post_comment
+		SET
+			comment_content = #{contentPrefix} || comment_content,
+    		target_comment_seq = null
+		WHERE target_comment_seq = #{targetedCommentSeq}
+	
+	]]></update>
+	
+	<delete id="deletePostComment"><![CDATA[
+	
+		DELETE FROM
+		tortoiseForge_discussionBoard_post_comment
+		WHERE comment_seq = #{commentSeq}
+	
+	]]></delete>
+	
+	
+	
+	
+	
+	
+	
+	<update id="updateAboutMe"><![CDATA[
+	
+		UPDATE 	tortoiseForge_user
+		SET 	user_about_me 	= #{aboutMe}	
+		WHERE 	user_seq 		= #{userSeq}	
+	
+	]]></update>
+	
+	
+	<update id="updateProfile"><![CDATA[
+	
+		UPDATE 	tortoiseForge_user
+		SET 	user_about_me 	= #{aboutMe},
+				user_img 		= #{userImg, jdbcType=VARCHAR}
+		WHERE 	user_seq 		= #{userSeq}	
+	
+	]]></update>
+	
+	
+	
+	
+	
+	
+	
+	
+	<update id="updatePassword"><![CDATA[
+	
+		UPDATE 	tortoiseForge_user
+		SET 	user_password 	= #{userPassword}	
+		WHERE 	user_seq 		= #{userSeq}	
+	
+	]]></update>
+	
+	
+	<update id="updateUserStatus"><![CDATA[
+	
+		UPDATE 	tortoiseForge_user
+		SET 	user_status 		= #{statusSeq},
+				user_update_time	= SYSTIMESTAMP AT TIME ZONE 'UTC'
+		WHERE 	user_seq 			= #{userSeq}	
+	
+	]]></update>
+	
+	
+	
+	
+	<update id="anonymizeAccounts"><![CDATA[
+	
+	  	UPDATE tortoiseForge_user
+	    SET
+	        user_name = NULL,
+	        user_email = NULL,
+	        user_password = NULL,
+	        user_status	= #{statusSeqToBe}
+	    WHERE
+	        user_status = #{statusSeq}
+	        AND user_update_time < (SYSTIMESTAMP AT TIME ZONE 'UTC') - NUMTODSINTERVAL(#{days}, 'DAY')
+	
+	]]></update>
+
+	
+	<select id="getAccountsToDelete" resultType="forge.model.UserDTO"><![CDATA[
+	
+		SELECT 
+			user_seq 			AS userSeq,
+			user_name			AS username,
+			user_password		AS userPassword,
+			user_email			AS userEmail,
+			user_img			AS userImg,
+			user_about_me		AS userAboutMe,
+			user_creation_time	AS userCreationTime,
+			user_update_time	AS userUpdateTime,
+			user_status			AS userStatus,
+			role_seq			AS roleSeq
+		FROM tortoiseForge_user
+	    WHERE
+	        user_status = #{statusSeq}	
+	        AND user_update_time < (SYSTIMESTAMP AT TIME ZONE 'UTC') - NUMTODSINTERVAL(#{days}, 'DAY')
+	
+	]]></select>
+	
+	
+	<select id="getImagePostContentsToDelete" resultType="forge.model.discussionboard.PostContentDTO"><![CDATA[
+	
+		SELECT 
+		    c.content_seq   AS contentSeq,
+		    c.content_value AS contentValue,
+		    c.type_seq      AS typeSeq,
+		    c.post_seq      AS postSeq
+		FROM tortoiseForge_discussionBoard_post p
+		LEFT JOIN tortoiseForge_discussionBoard_post_content c
+		ON p.post_seq = c.post_seq
+		WHERE p.user_seq = #{userSeq} AND c.type_seq = 2
+	
+	]]></select>
+		
+	
+	<delete id="deleteAccount"><![CDATA[
+	
+	  	DELETE
+	  	FROM tortoiseForge_user
+	    WHERE
+	        user_seq = #{userSeq}
+	
+	]]></delete>
+	
+	
+	
+	<insert id="sendMessage"><![CDATA[
+	
+		INSERT 
+		INTO tortoiseForge_message	
+		(message_content, sender_seq, recipient_seq)
+		VALUES
+		(#{message}, #{senderSeq}, #{recipientSeq})
+	
+	]]></insert>
+	
+	<select id="getInboxMessages" resultType="forge.model.messages.MessageDTO"><![CDATA[
+
+		SELECT * FROM
+		(
+		    SELECT inner_query.*, ROWNUM AS rn
+		    FROM
+		    (
+		        SELECT 
+		            m.message_seq				AS messageSeq,
+		            m.message_content			AS messageContent,
+		            m.message_creation_time		AS messageCreationTime,
+		            
+		            m.sender_seq				As senderSeq,
+		            m.recipient_seq				AS recipientSeq,
+		            m.opened_at					AS openedAt,
+		            m.read_at					AS readAt,
+		            m.deleted_at_sender			AS deletedAtSender,
+		            m.deleted_at_recipient		AS deletedAtRecipient,
+		            u.user_name					AS senderName
+		        FROM tortoiseForge_message m
+		        LEFT JOIN 
+					tortoiseForge_user u
+				ON	
+					m.sender_seq = u.user_seq
+		        WHERE m.recipient_seq = #{userSeq}
+		        AND	m.deleted_at_recipient is NULL
+		        ORDER BY m.message_creation_time DESC
+		    ) inner_query
+		    WHERE ROWNUM <= (#{pageSize}*#{pageNum})
+		)
+		WHERE rn >= (#{pageSize} * (#{pageNum} - 1) + 1)
+
+	]]></select>
+	
+	
+	<select id="getSentMessages" resultType="forge.model.messages.MessageDTO"><![CDATA[
+		
+		SELECT * FROM
+		(
+		    SELECT inner_query.*, ROWNUM AS rn
+		    FROM
+		    (
+		        SELECT 
+		            m.message_seq				AS messageSeq,
+		            m.message_content			AS messageContent,
+		            m.message_creation_time		AS messageCreationTime,
+		            
+		            m.sender_seq				As senderSeq,
+		            m.recipient_seq				AS recipientSeq,
+		            m.opened_at					AS openedAt,
+		            m.read_at					AS readAt,
+		            m.deleted_at_sender			AS deletedAtSender,
+		            m.deleted_at_recipient		AS deletedAtRecipient,
+		            u.user_name					AS recipientName
+		        FROM tortoiseForge_message m
+		        LEFT JOIN 
+					tortoiseForge_user u
+				ON	
+					m.recipient_seq = u.user_seq
+		        WHERE m.sender_seq = #{userSeq}
+		        AND	m.deleted_at_sender is NULL
+		        ORDER BY m.message_creation_time DESC
+		    ) inner_query
+		    WHERE ROWNUM <= (#{pageSize}*#{pageNum})
+		)
+		WHERE rn >= (#{pageSize} * (#{pageNum} - 1) + 1)
+
+	]]></select>
+	
+	
+	<select id="countInboxMessages" resultType="int"><![CDATA[
+	
+		SELECT 	COUNT(*) 
+		FROM 	tortoiseForge_message
+		WHERE 	recipient_seq = #{userSeq}
+		AND		deleted_at_recipient IS NULL
+	
+	]]></select>
+	
+	<select id="countSentMessages" resultType="int"><![CDATA[
+	
+		SELECT 	COUNT(*) 
+		FROM 	tortoiseForge_message
+		WHERE 	sender_seq = #{userSeq}
+		AND		deleted_at_sender IS NULL
+	
+	]]></select>
+	
+	
+	<select id="getMessage" resultType="forge.model.messages.MessageDTO"><![CDATA[
+	
+		SELECT 
+			message_seq 			AS messageSeq,
+			message_content			AS messageContent,
+			message_creation_time	AS messageCreationTime,
+			sender_seq				AS senderSeq,
+			recipient_seq			AS recipientSeq,
+			opened_at				AS openedAt,
+			read_at					AS readAt,
+			deleted_at_sender		AS deletedAtSender,
+			deleted_at_recipient	AS deletedAtRecipient
+		FROM tortoiseForge_message
+		WHERE message_seq = #{messageSeq} AND ROWNUM = 1
+	
+	]]></select>
+	
+	
+	
+	<update id="deleteMessage"><![CDATA[
+	
+		UPDATE	tortoiseForge_message
+		SET
+			deleted_at_sender 		= CASE WHEN sender_seq 		= #{userSeq} THEN SYSTIMESTAMP AT TIME ZONE 'UTC' ELSE deleted_at_sender END,
+			deleted_at_recipient 	= CASE WHEN recipient_seq 	= #{userSeq} THEN SYSTIMESTAMP AT TIME ZONE 'UTC' ELSE deleted_at_recipient END
+		WHERE 
+			message_seq = #{messageSeq} 
+		AND 
+			(sender_seq = #{userSeq} OR recipient_seq = #{userSeq})
+	
+	]]></update>
+	
+	
+	<update id="updateMessage"><![CDATA[
+		
+        UPDATE tortoiseForge_message
+        SET 
+            read_at = CASE WHEN #{read} = 1 THEN SYSTIMESTAMP AT TIME ZONE 'UTC' ELSE NULL END,
+            opened_at = CASE 
+                            WHEN #{read} = 1 AND opened_at IS NULL THEN SYSTIMESTAMP AT TIME ZONE 'UTC'
+                            ELSE opened_at
+                        END
+        WHERE message_seq = #{messageSeq}
+        AND recipient_seq = #{recipientSeq}
+        
+	]]></update>
+	
+	
+	<select id="checkNewMessages" resultType="boolean"><![CDATA[
+		    
+		SELECT CASE WHEN EXISTS (
+			SELECT 1 
+			FROM tortoiseForge_message
+			WHERE
+			    recipient_seq = #{userSeq}
+			    AND deleted_at_recipient IS NULL
+			    AND read_at IS NULL
+			    AND ROWNUM = 1
+		) THEN 1 ELSE 0 END
+		FROM dual
+		
+	]]></select>
+	
+	<delete id="purgeMessages"><![CDATA[
+		    
+		DELETE FROM tortoiseForge_message
+		WHERE deleted_at_recipient IS NOT NULL AND deleted_at_sender IS NOT NULL
+		
+	]]></delete>
+	
+	<update id="unlinkUserFromMessages"><![CDATA[
+	
+		UPDATE tortoiseForge_message
+		SET 
+		    sender_seq = CASE WHEN sender_seq = #{userSeq} THEN NULL ELSE sender_seq END,
+		    deleted_at_sender = CASE WHEN sender_seq = #{userSeq} THEN SYSTIMESTAMP AT TIME ZONE 'UTC' ELSE deleted_at_sender END,
+		    recipient_seq = CASE WHEN recipient_seq = #{userSeq} THEN NULL ELSE recipient_seq END,
+		    deleted_at_recipient = CASE WHEN recipient_seq = #{userSeq} THEN SYSTIMESTAMP AT TIME ZONE 'UTC' ELSE deleted_at_recipient END
+		WHERE sender_seq = #{userSeq} OR recipient_seq = #{userSeq}
+	
+	]]></update>
+	
+	
+	<insert id="report"><![CDATA[
+	
+		INSERT 
+		INTO tortoiseForge_report_log	
+		(report_reason, report_status, reporter_seq, target_seq)
+		VALUES
+		(#{reportReason}, #{reportPendingStatus}, #{reporterSeq}, #{targetSeq})
+	
+	]]></insert>
+	
+</mapper>
+

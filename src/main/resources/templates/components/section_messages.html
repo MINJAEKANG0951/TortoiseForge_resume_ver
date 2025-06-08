@@ -1,0 +1,330 @@
+<section th:fragment="section_messages">
+<div class="content">
+	
+	<input 
+		type="radio" 
+		id="inboxMessage" 
+		name="messageType" 
+		class="messageType"
+		th:checked="${messageType == inboxMessageType}"
+		th:value="${inboxMessageType}"/>
+	<input 
+		type="radio" 
+		id="sentMessage" 
+		name="messageType" 
+		class="messageType"
+		th:checked="${messageType == sentMessageType}"
+		th:value="${sentMessageType}"/>
+	
+	<div class="messageTypeWrapper">
+		<label for="inboxMessage" id="inboxMessageTypeBox" class="messageTypeBox">INBOX</label>
+		<label for="sentMessage" id="sentMessageTypeBox" class="messageTypeBox">SENT</label>
+	</div>
+	
+	
+	<div class="composeBtnWrapper">
+		
+		<div class="pagination">
+			<label id="paginationBtn" class="paginationBtn">
+				<span id="currentPage" class="currentPage" th:text="${currentPageNum}"></span>
+				<span id="lastPage"	class="lastPage" th:text="${totalNumberOfPages}"></span>
+				<span>pages</span>
+			</label>
+		</div>
+	
+		
+		<div class="composeBtn" id="composeBtn">
+			<span class="composeBtnText">COMPOSE</span>
+			<img class="composeBtnImg" src="/img/original/message2.png"/>
+		</div>
+		
+	</div>
+	
+	
+	<div class="pageSizeTypesWrapper">
+		<select class="pageSize"id="pageSize"  disabled>
+			<option
+				th:each="pageSizeType:${pageSizeTypes}"
+				th:value="${pageSizeType.key}" 
+				th:text="${pageSizeType.value}" 
+				th:selected="${pageSizeType.key == currentPageSize}"
+				name="pageSizeType">
+			</option>
+		</select>
+	</div>
+
+	
+	
+	
+	<div class="filterBtnsWrapper">
+		
+		<div class="filterBtns">
+		
+			<div class="filterBtn" id="selectAllBtn">
+				<label for="selectAll"></label>
+				<input id="selectAll" class="filterCheckbox" type="checkbox">
+				<img class="filterBtnImage" 		src="/img/original/select_all_unchecked.png">
+				<img class="filterBtnImageChecked" 	src="/img/original/select_all_checked.png">
+			</div>
+		
+			<div class="filterBtn" id="deleteSelectedBtn">
+				<img class="filterBtnImage" src="/img/original/trashbin.png">
+				<span class="filterBtnText">Delete</span>
+			</div>
+			
+			<div class="filterBtn" id="unreadSelectedBtn">
+				<img class="filterBtnImage" src="/img/original/unread.png">
+				<span class="filterBtnText">Unread</span>
+			</div>
+			
+			<div class="filterBtn" id="readSelectedBtn">
+				<img class="filterBtnImage" src="/img/original/read.png">
+				<span class="filterBtnText">Read</span>
+			</div>
+		</div>
+		
+	</div>
+
+
+	
+	<div class="messages" id="messages">
+		
+		<!-- messageType 에 따라서 read, unread 에 따라서 UI 나누어야할듯? -->
+		<div 
+			class="message" 
+			th:if="${messages}" 
+			th:each="message:${messages}"
+			th:type="${messageType == inboxMessageType} ? 'inbox' : 'sent'" >
+		
+		
+			<div 
+				class="statusHolder" 
+				th:if="${messageType == inboxMessageType}"
+				th:status="${message.readAt == null} ? 'unread' : 'read'"></div>
+			<div 
+				class="statusHolder" 
+				th:if="${messageType == sentMessageType}"
+				th:status="${message.openedAt == null} ? 'unread' : 'read'"></div>
+		
+		
+			<label class="selectMessage">
+				<input 
+					class="messageCheckbox"
+					type="checkbox"
+					th:messageSeq="${message.messageSeq}"/>
+				<img class="messageUncheckedIcon" src="/img/original/select_all_unchecked.png">
+				<img class="messageCheckedIcon" src="/img/original/select_all_checked.png">
+			</label>
+			
+			<div class="messageInfo" >
+				
+				<div class="messageSeq"	th:text="${message.messageSeq}"></div>
+				
+				<div class="messagePreview" th:text="${message.messagePreview}"></div>
+				
+				<pre class="messageContent" th:text="${message.messageContent}"></pre>
+					
+				<div class="participant">
+					<span
+						class="direction"
+						th:text="${messageType == inboxMessageType} ? 'from' : 'to'"></span>
+					<span 
+						class="participantName" 
+						th:text="${messageType == inboxMessageType} ? ${message.senderName} : ${message.recipientName}"></span>
+				</div>
+				
+				<div class="created" 	th:text="${message.messageCreationTime}"></div>
+				<div class="readAt" 	th:text="${message.readAt != null ? message.readAt : ''}"></div>
+				<div class="openedAt" 	th:text="${message.openedAt != null ? message.openedAt : ''}"></div>
+				
+			</div>
+			
+			
+			<div class="messageStatus">
+				<img class="messageReadImage" 	src="/img/original/read.png"/>
+				<img class="messageUnreadImage" src="/img/original/unread.png"/>
+			</div>
+			
+			
+			
+		</div>
+
+	</div>
+	
+	
+	<div 
+		class="emptyMessages" 
+		th:style="${messages==null || messages.size()==0} ? 'display:flex' : 'display:none'">
+		Nothing has been found
+	</div>
+
+
+
+	<div 
+		class="moreBtn" 
+		id="moreBtn"
+		th:style="${currentPageNum == totalNumberOfPages} ? 'display:none' : 'display:flex' ">
+		<img id="moreBtnArrow" src="/img/mini/arrow_bottom_mini.png"/>
+		<img id="moreBtnProgressCircle" src="/img/mini/progressCircle_mini.png"/>
+	</div>
+
+
+
+	<div class="boardBottomNavBar" th:style="${pagesAround==null || pagesAround.size()==0} ? 'display:none' : 'display:flex' ">
+	
+		<div id="pageNavigation" class="pageNavigation">
+		
+			<img 
+				id="pagesAroundLeftArrow"
+				class="pagesAroundArrow" 
+				src="/img/mini/arrow_back_mini.png"
+				
+				th:style="${currentPageNum == 1} ? 'opacity:0.2' : 'opacity:1' "
+			/>
+			
+			<div id="pagesAround" class="pagesAround">
+				<div 
+					th:each="pageAround:${pagesAround}"
+					th:classappend="${pageAround==currentPageNum} ? 'pageCurrent' : 'pageAround'"
+					th:text="${pageAround}">
+				</div>
+			</div>
+			
+			<img 
+				id="pagesAroundRightArrow"
+				class="pagesAroundArrow" 
+				src="/img/mini/arrow_forward_mini.png"
+				
+				th:style="${currentPageNum == totalNumberOfPages} ? 'opacity:0.2' : 'opacity:1' "
+			/>
+		
+		</div>
+		
+	</div>
+
+
+
+
+
+
+	<div class="drawerWrapper">
+	
+		<input 	class="drawerOnOff" id="sendMessageDrawerOnOff" type="checkbox"/>
+		<div 	class="drawer" 		id="sendMessageDrawer">
+		
+			<div class="drawerHeader">
+				<div class="empty"></div>
+				<div class="drawerTitle">
+					<img src="/img/original/title_send_message.png" class="drawerTitle"/>
+					<span>SEND MESSAGE</span>
+				</div>
+				
+				<label for="sendMessageDrawerOnOff" class="drawerCloseBtn"><img src="/img/original/close.png"/></label>
+			</div>
+		
+			
+			<div class="drawerSection">
+		
+				<div class="drawerInputWrapper">
+					<div class="drawerInputWrapperTitle">To</div>
+					<input class="drawerInput" id="recipient" type="text" disabled>
+				</div>
+	
+				<div class="drawerInputWrapper">
+					<div class="drawerInputWrapperTitle">Message</div>
+					<textarea
+						class="drawerTextarea" 
+						id="message"
+						th:maxLength="${maxMessageLength}" disabled></textarea>
+					<div class="textLength">
+						<span 
+							class="textCurrentLength" 
+							id="messageCurrentLength"></span>
+						<span 
+							class="textMaxLength" 	
+							id="messageMaxLength"
+							th:text="${maxMessageLength}"></span>
+					</div>
+				</div>
+
+			</div>
+			
+			<div class="drawerGuide" id="sendMessageGuide"></div>
+			
+			<div class="drawerBtnWrapper">
+				<button class="drawerBtn" id="sendMessageBtn" disabled>SEND</button>
+			</div>
+
+		</div>
+		<label 	for="sendMessageDrawerOnOff" 	class="drawerBackground"></label>
+		
+	</div>
+	
+	
+
+	<div class="drawerWrapper">
+	
+		<input 	class="drawerOnOff" id="readMessageDrawerOnOff" type="checkbox"/>
+		<div 	class="drawer" 		id="readMessageDrawer">
+		
+			<div class="drawerHeader">
+				<div class="empty"></div>
+				<div class="drawerTitle">
+					<img src="/img/original/title_read_message.png" class="drawerTitle"/>
+					<span>READ MESSAGE</span>
+				</div>
+				
+				<label for="readMessageDrawerOnOff" class="drawerCloseBtn"><img src="/img/original/close.png"/></label>
+			</div>
+		
+			
+			<div class="drawerSection">
+		
+				<!-- 쪽지타입, 보낸이, 받는이, 쪽지내용 -->
+				<div class="drawerData" id="readMessageSeq"></div>
+				
+				<div class="drawerText">
+					<span class="drawerTextTitle">TYPE</span>
+					<span class="drawerTextContent" id="readMessageType"></span>		
+				</div>
+				
+				<div class="drawerText">
+					<span class="drawerTextTitle" 	id="readMessageDirection"></span>
+					<span class="drawerTextContent" id="readMessageParticipant"></span>		
+				</div>
+				
+				<div class="drawerText">
+					<span class="drawerTextTitle">CREATED</span>
+					<span class="drawerTextContent" id="readMessageCreated"></span>		
+				</div>		
+		
+				<pre class="drawerText2" id="readMessageContent"></pre>
+
+			</div>
+			
+			<div class="drawerGuide" id="readMessageGuide"></div>
+			
+			<div class="drawerBtnWrapper">
+				<button class="drawerDeleteBtn" id="readMessageDeleteBtn" 	disabled>DELETE</button>
+				<button class="drawerBtn" 		id="readMessageReplyBtn" 	disabled>REPLY</button>
+			</div>
+
+		</div>
+		<label 	for="readMessageDrawerOnOff" 	class="drawerBackground"></label>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	<div class="modalBackground" id="modalBackground">
+		<div class="modal">
+			<span class="modalText">waiting..</span>
+			<img class="modalImage" src="/img/mini/progressCircle_mini.png"/>
+		</div>
+	</div>
+
+</div>
+</section>

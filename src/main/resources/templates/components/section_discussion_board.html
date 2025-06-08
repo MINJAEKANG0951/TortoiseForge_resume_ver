@@ -1,0 +1,206 @@
+<section th:fragment="section_discussion_board">
+<div class="content">
+
+
+	<div class="boardNavigationBar">
+	
+		<div class="boardSearchBar">
+				<select id="searchType">
+					<option 
+						th:each="filterType:${searchTypes}"
+						th:value="${filterType.key}" 
+						th:text="${filterType.value}" 
+						name="searchType"
+						class="searchType"
+						th:selected="${filterType.key == searchType}">
+					</option>
+				</select>
+				<input 	id="searchQuery"	type="search"	th:value="${searchQuery}"/>
+				<img 	id="searchBtn"		src="/img/mini/magnifier_mini.png" />
+		</div>
+		
+		<div class="boardNavBarBtns">
+		
+			<select id="pageSize" class="boardNavBarSelect">
+				<option
+					th:each="pageSizeType:${pageSizeTypes}"
+					th:value="${pageSizeType.key}" 
+					th:text="${pageSizeType.value}" 
+					th:selected="${pageSizeType.key == currentPageSize}"
+					name="pageSizeType"
+					class="pageSizeType">
+				</option>
+			</select>
+			
+			<button  
+				id="postBtn" 
+				class="boardNavBarBtn"
+				name="postBtn"
+				th:if="${session.userSeq}">
+				<span class="boardNavBarBtnText">POST</span>
+			</button>
+			<button  
+				id="postBtn"
+				class="boardNavBarBtn"
+				th:unless="${session.userSeq}"
+				style="opacity:0.3">
+				<span class="boardNavBarBtnText">POST</span>
+			</button>
+			
+		</div>
+
+	</div>
+
+
+	<div id="posts" class="posts">
+		
+		<div class="pagination">
+			<label id="paginationBtn" class="paginationBtn">
+				<span id="currentPage" class="currentPage" th:text="${currentPageNum}"></span>
+				<span id="lastPage"	class="lastPage" th:text="${totalNumberOfPages}"></span>
+				<span>pages</span>
+			</label>
+			
+			<div id="removeFilterBtn" 
+				 class="removeFilterBtn" 
+				 th:style="${searchQuery != null && searchQuery.length > 0} ? 'display:flex' : 'display:none' ">
+				<span>remove filter</span>
+				<img src="/img/mini/trashbin_red_mini.png"/>
+			</div>
+		</div>
+
+
+		<!-- onClick DocumentLoad 로 하던가 아니면 Thymeleaf 로 하셈 -->
+		<div class="post" th:if="${announcements}" th:each="post:${announcements}" name="announcement">
+
+			<div class="postSeq" th:text="${post.postSeq}"></div>
+			<div class="postPageNumber" th:text="${currentPageNum}"></div>
+
+			<div class="postInfo">
+				<div class="postInfoLine1">
+					<img class="postTitleImg" src="/img/mini/emplifier_mini.png"/>
+					<div class="postTitle" th:text="${post.postTitle}"></div>
+				</div>
+				<div class="postInfoLine2">
+					<div class="postWriter" th:text="${post.username}"></div>
+					<div class="postViews" th:text="${post.postViews}"></div>
+					<div class="postLikes" th:text="${post.likes}"></div>
+					<div class="postCreationTime" th:text="${post.postCreationTime}"></div>
+				</div>
+			</div>
+			
+			<div class="postHowManyComments"></div>
+
+		</div>
+		
+		
+		
+		<div class="post" th:if="${posts}" th:each="post:${posts}">
+
+			<div class="postSeq" th:text="${post.postSeq}"></div>
+			<div class="postPageNumber" th:text="${currentPageNum}"></div>
+
+			<div class="postInfo">
+				<div class="postInfoLine1">
+					<img 
+						class="postTitleImg" 
+						th:src="${post.howmanyImages > 0} ? '/img/mini/image_mini.png':'/img/mini/text_mini.png' "
+					/>
+					<div class="postTitle" th:text="${post.postTitle}"></div>
+				</div>
+				<div class="postInfoLine2">
+					<div class="postWriter" th:text="${post.username}"></div>
+					<div class="postViews" th:text="${post.postViews}"></div>
+					<div class="postLikes" th:text="${post.likes}"></div>
+					<div class="postCreationTime" th:text="${post.postCreationTime}"></div>
+				</div>
+			</div>
+			
+			<div class="postHowManyComments" th:text="${post.comments}"></div>
+
+		</div>
+		
+		
+		
+		<div class="comment" th:if="${comments}" th:each="comment:${comments}">
+			<div class="commentSeq" th:text="${comment.commentSeq}"></div>
+			<div class="postSeq" th:text="${comment.postSeq}"></div>
+			<div class="postPageNumber" th:text="${currentPageNum}"></div>
+			<div class="commentInfo">
+				<div class="commentInfoLine1">
+					<img 
+					    class="postTitleImg" 
+					    th:src="${comment.postType == 1 ? '/img/mini/emplifier_mini.png' : (comment.howmanyImages > 0 ? '/img/mini/image_mini.png' : '/img/mini/text_mini.png')}" 
+					/>
+					<div class="postTitle" th:text="${comment.postTitle}"></div>
+				</div>
+				<div class="commentInfoLine2">
+					<img class="commentImg" src="/img/mini/comment_mini.png"/>
+					<div class="commentContent" th:text="${comment.commentContent}"></div>
+				</div>
+				<div class="commentInfoLine3">
+					<div class="commentWriter" th:text="${comment.username}"></div>
+					<div class="commentCreationTime" th:text="${comment.commentCreationTime}"></div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+
+		<div 
+			class="emptyPosts" 
+			th:if="${(posts==null || posts.size()==0) && (comments==null || comments.size()==0)}">
+			Nothing has been found
+		</div>
+
+	</div>
+	
+	
+	<div 
+		class="moreBtn" 
+		id="moreBtn"
+		th:style="${currentPageNum == totalNumberOfPages} ? 'display:none' : 'display:flex' ">
+		<img id="moreBtnArrow" src="/img/mini/arrow_bottom_mini.png"/>
+		<img id="moreBtnProgressCircle" src="/img/mini/progressCircle_mini.png"/>
+	</div>
+	
+	
+	<div 
+		class="boardBottomNavBar"
+		th:style="${pagesAround==null || pagesAround.size()==0} ? 'display:none' : 'display:flex' ">
+	
+		<div id="pageNavigation" class="pageNavigation">
+		
+			<img 
+				id="pagesAroundLeftArrow"
+				class="pagesAroundArrow" 
+				src="/img/mini/arrow_back_mini.png"
+				
+				th:style="${currentPageNum <= 1} ? 'opacity:0.2' : 'opacity:1' "
+			/>
+			
+			<div id="pagesAround" class="pagesAround">
+				<div 
+					th:each="pageAround:${pagesAround}"
+					th:classappend="${pageAround==currentPageNum} ? 'pageCurrent' : 'pageAround'"
+					th:text="${pageAround}">
+				</div>
+			</div>
+			
+			<img 
+				id="pagesAroundRightArrow"
+				class="pagesAroundArrow" 
+				src="/img/mini/arrow_forward_mini.png"
+				
+				th:style="${currentPageNum >= totalNumberOfPages} ? 'opacity:0.2' : 'opacity:1' "
+			/>
+		
+		</div>
+		
+	</div>
+
+	
+</div>
+</section>

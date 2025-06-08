@@ -1,0 +1,427 @@
+@charset "UTF-8";
+
+section {
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	position:relative;
+	
+	flex-direction:column;
+}
+
+section .content {
+	width:100%;
+	max-width:600px;
+	display:flex;
+	justify-content:center;
+	flex-direction:column;
+	align-items:flex-start;
+	padding:20px 20px;
+} 
+
+section .content .modelVariable {
+	display:none;
+}
+
+section .content .box {
+	width:100%;
+	border:1px solid #a6a7a8;
+	border-radius:20px;
+	padding:20px;
+	margin:10px 0;
+	position:relative;
+	cursor:pointer;
+} 
+
+section .content .box .boxTitle {
+	position:absolute;
+	left:10px;
+	top:-7px;
+	background-color:white;
+	padding:0 10px;
+	
+	font-size:13px;
+	color:#a6a7a8;
+}
+
+section .content .box .boxContent {
+	font-weight:100;
+	word-wrap: break-word;
+	word-break: break-all;
+} 
+
+section .content .arrowBtn {
+	padding:10px 20px;
+	margin:10px 0;
+	background-color:#f0f0f0;
+	cursor:pointer;
+	font-size:13px;
+	width:100%;
+	
+	display:flex;
+	justify-content:left;
+	align-items:center;
+} 
+
+section .content .arrowBtn .arrowBtnTitle {
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+section .content .arrowBtn .arrowBtnImage {
+	width:35px;
+	height:35px;
+	margin-left:10px;
+} 
+
+
+
+
+section .content #disableBtns {
+	display:none;
+}
+section .content #disableBtns:checked ~ .arrowBtn {
+	opacity:0.3;
+}
+
+
+
+section .content .drawerWrapper {
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	position:relative;
+	
+	flex-direction:column;
+}
+section .content .drawerWrapper .drawer {
+	opacity:0;
+	position:fixed;
+	left:0;
+	top:0;
+	transform:translateX(100%);
+	width:100%;
+	height:100%;
+	max-width:600px;
+	background-color:white;
+	z-index:1300;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	
+	transition:0.3s;
+	overflow:auto;
+}
+
+
+section .content .drawerWrapper .drawerOnOff{
+	display:none;
+}
+section .content .drawerWrapper .drawerOnOff:checked ~ .drawer {
+	opacity:1;
+	transform:translateX(0);
+}
+section .content .drawerWrapper .drawerOnOff:checked ~ .drawerBackground {
+	display:block;
+}
+section .content .drawerWrapper .drawerOnOff:unchecked ~ .drawerBackground {
+	display:none;
+}
+section .content .drawerWrapper .drawerBackground {
+	display:none;
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background-color: rgba(0, 0, 0, 0.1);
+	z-index:1250;
+}
+
+@media screen and (min-width:600px)
+{
+	section .content .drawerWrapper .drawer {
+		left:50%;
+		top:100%;
+		transform:translateX(-50%);
+	}
+	
+	section .content .drawerWrapper .drawerOnOff:checked ~ .drawer {
+		left:50%;
+		top:100%;
+		transform:translate(-50%, -100%);
+	}
+}
+
+
+section .content .drawerWrapper .drawer .drawerHeader{
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+}
+section .content .drawerWrapper .drawer .drawerHeader .empty {
+	width:70px;
+	height:70px;
+}
+section .content .drawerWrapper .drawer .drawerHeader .drawerTitle {
+	width:calc( 100% - 140px );
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+section .content .drawerWrapper .drawer .drawerHeader .drawerTitle img {
+	width:90%;
+	max-width:330px;
+}
+section .content .drawerWrapper .drawer .drawerHeader .drawerTitle span {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	
+	font-weight:bold;
+	font-size:13px;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow: ellipsis;
+	
+	cursor:default;
+	display:none;
+}
+
+@media screen and (max-width:300px)
+{
+
+	section .content .drawerWrapper .drawer .drawerHeader .drawerTitle img {
+		display:none;
+	}
+	
+	section .content .drawerWrapper .drawer .drawerHeader .drawerTitle span {
+		display:block;
+	}
+	
+}
+
+section .content .drawerWrapper .drawer .drawerHeader .drawerCloseBtn {
+	width:70px;
+	height:70px;
+	padding:10px;
+	cursor:pointer;
+	display:block;
+}
+section .content .drawerWrapper .drawer .drawerHeader .drawerCloseBtn img {
+	width:100%;
+	height:100%;
+}
+
+
+
+
+section .content .drawerWrapper .drawer .drawerSection {
+	padding:0 20px;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerText {
+	padding:10px 0;
+	word-wrap: break-word;
+	line-height:1.5;
+	font-size:13px;
+}
+
+
+section .content .drawerWrapper .drawer .drawerSection .drawerInputWrapper {
+	width:100%;
+	position:relative;
+	margin:20px 0;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerInputWrapper .drawerInputWrapperTitle {
+	position:absolute;
+	left:10px;
+	top:-7px;
+	background-color:white;
+	color:#a6a7a8;
+	padding:0 10px;
+	font-size:13px;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerInputWrapper .drawerInput {
+	width:100%;
+	padding:20px;
+	border:1px solid #a6a7a8;
+	border-radius:20px;
+}
+
+section .content .drawerWrapper .drawer .drawerSection .drawerInputWrapper .drawerTextarea {
+	width:100%;
+	padding:20px;
+	border:1px solid #a6a7a8;
+	border-radius:20px;
+	
+	resize: none;
+    overflow: hidden;
+    
+    font-size:16px;
+   	font-family: sans-serif;
+   	letter-spacing: 0.5px;
+	line-height:24px;
+	height:auto;
+	
+	box-sizing: border-box;
+}
+
+section .content .drawerWrapper .drawer .drawerSection .drawerInputWrapper .textLength {
+	position:absolute;
+	right:0;
+	bottom:0;
+	padding:10px;
+	color:#a6a7a8;
+	font-size:12px;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerInputWrapper .textLength 
+.textCurrentLength:after
+{
+	content:" / ";
+}
+
+
+section .content .drawerWrapper .drawer .drawerSection .drawerRadioBox {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	gap:10px;
+}
+
+section .content .drawerWrapper .drawer .drawerSection .drawerRadioBox .radioWrapper {
+	border:1px solid #ddd;
+	border-radius:10px;
+	padding:10px;
+	cursor:pointer;
+	transition:0.3s;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerRadioBox .radioWrapper .radioTitle {
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	padding:5px 0;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerRadioBox .radioWrapper .radioTitle .radioTitleText {
+	font-size:14px;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerRadioBox .radioWrapper .radioTitle .radioTitleRadio {
+	margin:0;
+	margin-left:10px;
+	cursor:pointer;
+}
+section .content .drawerWrapper .drawer .drawerSection .drawerRadioBox .radioWrapper .radioContent {
+	font-size:13px;
+	padding:5px 0;
+	line-height:1.4;
+	word-wrap: break-word;
+}
+
+section .content .drawerWrapper .drawer .drawerGuide {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	color:red;
+	padding:0 20px;
+	font-size:13px;
+	
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+
+
+
+
+
+
+
+section .content .drawerWrapper .drawer .drawerBtnWrapper {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:100%;
+	padding:20px;
+}
+section .content .drawerWrapper .drawer .drawerBtnWrapper .drawerBtn {
+	width:100%;
+	height:40px;
+	background-color:#006495;
+	border:0;
+	border-radius:5px;
+	color:white;
+	font-weight:bold;
+	transition:0.3s;
+	cursor:pointer;
+}
+section .content .drawerWrapper .drawer .drawerBtnWrapper .drawerDeleteBtn {
+	width:100%;
+	height:40px;
+	background-color:#ff0000;
+	border:0;
+	border-radius:5px;
+	color:white;
+	font-weight:bold;
+	transition:0.3s;
+	cursor:pointer;
+}
+section .content .drawerWrapper .drawer .drawerBtnWrapper .drawerBtn:hover {
+	background-color:#014c71;
+}
+section .content .drawerWrapper .drawer .drawerBtnWrapper .drawerDeleteBtn:hover {
+	background-color:#e02e40;
+}
+
+
+
+
+
+
+section .content #modalBackground {
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background-color:rgba(0,0,0,0.3);
+	z-index:3000;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	display:none;
+}
+section .content .modal {
+	max-width:150px;
+	width:85%;
+	min-height:90px;
+	background-color:white;
+	
+	border-radius:15px;
+	
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	gap:15px;
+}
+section .content .modal .modalText {
+	font-size:18px;
+}
+section .content .modal .modalImage {
+	width:25px;
+	height:25px;
+	animation: rotateAnimation 5s linear infinite;
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+
+

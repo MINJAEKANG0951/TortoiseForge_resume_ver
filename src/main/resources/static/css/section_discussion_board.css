@@ -1,0 +1,573 @@
+@charset "UTF-8";
+
+
+section {
+	margin:70px 0 0 0;
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+section .content {
+	width:100%;
+	max-width:600px;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+}
+
+section .content .boardNavigationBar {
+	width:100%;
+	max-width:600px;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	
+	padding:15px 20px;
+}
+section .content .boardNavigationBar .boardSearchBar {
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	
+	border:1px solid #a5a5a5;;
+	border-radius:3px;
+	background-color:white;
+	overflow:hidden;
+}
+section .content .boardNavigationBar .boardSearchBar select {
+	width:110px;
+	min-height:40px;
+	border:0;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	background-color:white;
+	
+	cursor:pointer;
+}
+section .content .boardNavigationBar .boardSearchBar input[type="search"]{
+	width:calc(100% - 150px);
+	min-height:40px;
+	border:0;
+	border-left:1px solid #a5a5a5;;
+	background-color:white;
+	
+	padding-left:5px;
+	font-weight:bold;
+}	
+section .content .boardNavigationBar .boardSearchBar img{
+	width:40px;
+	height:40px;
+	padding:5px;
+	background-color:white;
+	cursor:pointer;
+}
+
+	
+section .content .boardNavigationBar .boardNavBarBtns {
+	padding:20px 0 0 0;
+	width:100%;
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+}
+section .content .boardNavigationBar .boardNavBarBtns .boardNavBarSelect{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	padding:5px 5px;
+	
+	border:1px solid #a5a5a5;
+	border-radius:4px;
+	cursor:pointer;
+	
+	
+	background-color:white;
+}
+section .content .boardNavigationBar .boardNavBarBtns .boardNavBarBtn{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	padding:5px 15px;
+	
+	border:1px solid #a5a5a5;
+	border-radius:4px;
+	cursor:pointer;
+	
+	background-color:white;
+}
+section .content .boardNavigationBar .boardNavBarBtns .boardNavBarBtn .boardNavBarBtnText {
+	font-size:14px;
+	color:#555;
+}
+
+
+
+
+section .content .posts {
+	
+	width:100%;
+	max-width:600px;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	
+	padding:5px 10px;
+	position:relative;
+}
+section .content .posts .pagination {
+	width:100%;
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	flex-wrap:wrap;
+	padding:0 10px;
+}
+section .content .posts .pagination .paginationBtn {
+	font-size:13px;
+	border:1px solid #a5a5a5;
+	border-radius:4px;
+	padding:10px;
+	cursor:pointer;
+	
+	margin-bottom:10px;
+}
+section .content .posts .pagination .paginationBtn .currentPage::after{
+	content: "/";
+    display:inline-block;
+    width: 1px;
+    height: 9px;
+    margin-left:3px;
+}
+section .content .posts .pagination .paginationBtn .lastPage::before{
+	content: "";
+    display:inline-block;
+    width: 1px;
+    height: 9px;
+    margin-right:3px;
+}
+section .content .posts .pagination .removeFilterBtn {
+	font-size:13px;
+	border-radius:10px;
+	padding:7px 10px;
+	cursor:pointer;
+	background-color:#ddd;
+	border:1px solid #ddd;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	
+	margin-bottom:10px;
+}
+section .content .posts .pagination .removeFilterBtn span{
+	margin-right:5px;
+}
+section .content .posts .pagination .removeFilterBtn img{
+	width:20px;
+	height:20px;
+}
+
+section .content .posts .emptyPosts {
+	width:100%;
+	padding:60px 30px 60px 30px;
+	display:flex;
+	justify-content:center;
+	align-items: center;
+
+	font-size: 20px;
+	line-height: 30px;
+	font-weight: bold;
+	opacity: 0.3;
+	text-align: center;
+}
+
+
+section .content .posts .post {
+	width: 100%; 
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction: row; 
+	padding:10px 5px;
+	
+	cursor:pointer;
+	
+	border-bottom:1px solid #e5e5e5;
+}
+section .content .posts .post:last-child {
+	border-bottom:1px solid transparent;
+}
+
+section .content .posts .post .postSeq {
+	display:none;
+}
+
+section .content .posts .post .postPageNumber {
+	display:none;
+}
+
+section .content .posts .post .postHowManyComments {
+	width:38px;
+	font-size:12px;
+	text-align:center;
+	color:red;
+}
+
+section .content .posts .post .postInfo {
+	width:calc( 100% - 38px ); 
+}
+
+section .content .posts .post .postInfoLine1 {
+	width: 100%; 
+	display:flex;
+	align-items:center;
+}
+
+section .content .posts .post .postInfoLine1 .postTitleImg {
+	width:50px;
+	height:50px;
+	overflow:hidden;
+	flex-shrink: 0; /* 이미지 크기 고정 */
+	
+	opacity:0.7;
+}
+
+section .content .posts .post .postInfoLine1 .postTitle {
+	padding:5px;
+	font-size:15px;
+	white-space: nowrap;
+	overflow: hidden;         
+	text-overflow: ellipsis;
+}
+
+
+section .content .posts .post .postInfoLine2 {
+	width:100%;
+	display:flex;
+	justify-content:left;
+	column-gap:5px;
+	padding:5px 5px;
+	
+	color:#999;
+	
+	align-items:center;
+	font-size:12px;
+	flex-direction:row;
+	flex-wrap:wrap;
+	line-height: 16px;
+}
+
+section .content .posts .post .postInfoLine2 .postWriter::after {
+    content: "";
+    display:inline-block;
+    width: 1px;
+    height: 9px;
+    background-color: #dfe1ee;
+    margin-left:6px;
+}
+section .content .posts .post .postInfoLine2 .postViews::before {
+	margin-right:6px;
+	content:'views';
+}
+section .content .posts .post .postInfoLine2 .postViews::after {
+    content: "";
+    display:inline-block;
+    width: 1px;
+    height: 9px;
+    background-color: #dfe1ee;
+    margin-left:6px;
+}
+section .content .posts .post .postInfoLine2 .postLikes::before {
+	margin-right:6px;
+	content:'likes';
+}
+section .content .posts .post .postInfoLine2 .postLikes::after {
+    content: "";
+    display:inline-block;
+    width: 1px;
+    height: 9px;
+    background-color: #dfe1ee;
+    margin-left:6px;
+}
+
+
+/* announcement - post class 와 다른점만 css 적용 */
+section .content .posts .post[name='announcement'] {
+	background-color:rgba(255, 0, 0, 0.1);
+	border-bottom:1px solid #ddd;
+}
+section .content .posts .post[name='announcement'] .postInfo .postInfoLine1 .postTitle {
+	font-weight:bold;
+}
+section .content .posts .post[name='announcement'] .postInfo .postInfoLine2 {
+	display:none;
+}
+
+
+
+
+
+section .content .posts .comment {
+	width: 100%; 
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction: row; 
+	padding:10px 5px;
+	
+	cursor:pointer;
+	
+	border-bottom:1px solid #e5e5e5;
+}
+section .content .posts .comment:last-child {
+	border-bottom:1px solid transparent;
+}
+section .content .posts .comment .commentSeq {
+	display:none;
+}
+section .content .posts .comment .postSeq {
+	display:none;
+}
+section .content .posts .comment .postPageNumber {
+	display:none;
+}
+section .content .posts .comment .commentInfo {
+	width:100%
+}
+section .content .posts .comment .commentInfo .commentInfoLine1 {
+	width: 100%; 
+	display:flex;
+	align-items:center;
+}
+section .content .posts .comment .commentInfo .commentInfoLine1 .postTitleImg {
+	width:30px;
+	height:30px;
+	overflow:hidden;
+	flex-shrink: 0; /* 이미지 크기 고정 */
+	
+	opacity:0.7;
+}
+section .content .posts .comment .commentInfo .commentInfoLine1 .postTitle {
+	padding:5px;
+	font-size:11px;
+	color:#999;
+	white-space: nowrap;
+	overflow: hidden;         
+	text-overflow: ellipsis;
+	
+	padding-right:30px;
+}
+section .content .posts .comment .commentInfo .commentInfoLine2 {
+	width: 100%; 
+	display:flex;
+	align-items:center;
+}
+section .content .posts .comment .commentInfo .commentInfoLine2 .commentImg {
+	width:40px;
+	height:40px;
+	overflow:hidden;
+	flex-shrink: 0; /* 이미지 크기 고정 */
+	
+	opacity:0.7;
+}
+section .content .posts .comment .commentInfo .commentInfoLine2 .commentContent {
+	padding:5px;
+	font-size:15px;
+	white-space: nowrap;
+	overflow: hidden;         
+	text-overflow: ellipsis;
+	padding-right:20px;
+}
+section .content .posts .comment .commentInfo .commentInfoLine3 {
+	width: 100%; 
+	display:flex;
+	align-items:center;
+}
+section .content .posts .comment .commentInfo .commentInfoLine3 {
+	width:100%;
+	display:flex;
+	justify-content:left;
+	column-gap:5px;
+	padding:5px 5px;
+	
+	color:#999;
+	
+	align-items:center;
+	font-size:12px;
+	flex-direction:row;
+	flex-wrap:wrap;
+	line-height: 16px;
+}
+section .content .posts .comment .commentInfo .commentInfoLine3 .commentWriter::after {
+    content: "";
+    display:inline-block;
+    width: 1px;
+    height: 9px;
+    background-color: #dfe1ee;
+    margin-left:6px;
+}
+
+
+
+section .content .moreBtn {
+	
+	width:100%;
+	max-width:600px;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	
+	padding:10px;
+	position:relative;
+	cursor:pointer;
+}
+section .content .moreBtn img {
+	width:40px;
+	height:40px;
+}
+section .content .moreBtn #moreBtnProgressCircle {
+	padding:5px;
+	animation: rotateAnimation 5s linear infinite;
+	display:none;
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+section .content .boardBottomNavBar {
+	
+	width:100%;
+	max-width:600px;
+	
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	
+	padding:10px;
+	
+}
+section .content .boardBottomNavBar .pageNavigation {
+	width:100%;
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+}
+section .content .boardBottomNavBar .pageNavigation .pagesAroundArrow {
+	width:50px;
+	height:50px;
+	padding:10px;
+	cursor:pointer;
+}
+section .content .boardBottomNavBar .pageNavigation .pagesAround {
+	padding:10px 15px;
+	
+	width:calc( 100% - 60px );
+	max-width:400px;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-wrap:wrap;
+}
+section .content .boardBottomNavBar .pageNavigation .pagesAround .pageAround{
+	font-size:16px;
+	padding:15px;
+	margin:5px;
+	color:#a5a5a5;;
+	cursor:pointer;
+}
+section .content .boardBottomNavBar .pageNavigation .pagesAround .pageCurrent{
+	font-size:16px;
+	padding:15px;
+	margin:5px;
+	font-weight:bold;
+}
+
+
+
+@media screen and (max-width:235px)
+{
+	section .content .boardNavigationBar {
+		padding:15px 10px;
+	}
+	section .content .boardNavigationBar .boardSearchBar select {
+		width:70px;
+	}
+	section .content .boardNavigationBar .boardSearchBar input[type="search"] {
+		width:calc( 100% - 110px );
+	}
+
+	section .content .boardNavigationBar .boardNavBarBtns {
+		flex-direction:column;
+		align-items:end;
+	}
+	section .content .boardNavigationBar .boardNavBarBtns select{
+		margin-bottom:10px;
+	}
+	
+	
+	section .content .posts .pagination {
+		padding:0;
+	}
+	
+	section .content .boardBottomNavBar .pageNavigation {
+		width:100%;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		flex-direction:column;
+		flex-wrap:wrap;
+	}
+	
+}
+@media screen and (max-width:180px)
+{
+	section .content .boardNavigationBar .boardSearchBar select {
+		width:50px;
+	}
+	section .content .boardNavigationBar .boardSearchBar input[type="search"] {
+		width:calc( 100% - 90px );
+	}
+}
+
+
+
+@media screen and (min-width:500px)
+{
+	section .content .posts .post:hover {
+		background-color:#f6f6f6;
+	}
+	section .content .posts .post[name='announcement']:hover {
+		background-color:rgba(255, 0, 0, 0.2);
+	}
+	section .content .posts .comment:hover {
+		background-color:#f6f6f6;
+	}
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,238 @@
+@charset "UTF-8";
+
+section {
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	position:relative;
+}
+
+section .content {
+	width:100%;
+	max-width:600px;
+	padding:20px;
+}
+
+section .content .navBtns {
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+}
+
+section .content .navBtns .navBtn {
+	width:40px;
+	height:40px;
+	cursor:pointer;
+}
+
+section .content input[name="viewPagerRadio"] {
+	display:none;
+}
+
+section .content .title {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	flex-wrap: wrap;
+	cursor:default;
+	
+	width:100%;
+}
+
+
+section .content .title  .titleImg {
+	width:80px;
+	height:80px;
+}
+
+
+section .content .title .titleText {
+	padding:10px;
+	font-size:30px;
+	font-weight:bold;
+	text-align:center;
+}
+
+@media screen and (max-width:200px) {
+	section .content .title .titleText {
+		font-size:20px;
+	}
+}
+
+section .content .title .titleSmallText {
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	
+	width:100%;
+	padding:10px;
+	font-size:20px;
+	font-weight:bold;
+}
+section .content .title .titleSmallText label{
+	display:none;
+}
+section .content .title .titleSmallText .titleArrow {
+	width:30px;
+	height:30px;
+	cursor:pointer;
+	display:none;
+}
+@media screen and (max-width:200px) {
+	section .content .title .titleSmallText {
+		font-size:15px;
+	}
+	section .content .title .titleSmallText .titleArrow {
+		width:20px;
+		height:20px;
+	}
+}
+
+section .content #page1Radio:checked ~ .title .titleSmallText .page1Title {
+	display:block;
+}
+section .content #page1Radio:checked ~ .title .titleSmallText .page1Title .titleArrow[name='backArrow'] {
+	opacity:0.2;
+}
+
+section .content #page2Radio:checked ~ .title .titleSmallText .page2Title {
+	display:block;
+}
+section .content #page2Radio:checked ~ .title .titleSmallText .page2Title .titleArrow[name='forwardArrow'] {
+	opacity:0.2;
+}
+
+
+section .content .viewPager {
+	display:flex;
+	flex-direction:row;
+	flex-wrap:nowrap;
+	width:100%;
+	overflow:hidden;
+	position:relative;
+	
+	height:auto;
+}
+section .content .viewPager .viewPagerPage {
+	flex: 0 0 100%;
+	min-width: 100%;
+	transition:0.3s;
+}
+
+section .content .viewPager .viewPagerPage .justViewPageContainer {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	width:100%;
+	padding:30px 10px 10px 10px;
+	gap:20px;
+}
+
+section .content .viewPager .viewPagerPage .justViewPageContainer .smallTitle {
+	width:100%;
+	font-size:20px;
+	text-align:center;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer .guide {
+	width:100%;
+	font-size:14px;
+	line-height:18px;
+	text-align:center;
+	color:red;
+}
+
+@media screen and (max-width:230px) {
+	
+	section .content .viewPager .viewPagerPage .justViewPageContainer .smallTitle {
+		font-size:7vw;
+	}
+}
+
+
+
+section .content .viewPager .viewPagerPage .justViewPageContainer .inputBox {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:100%;
+	padding:10px;
+}
+
+section .content .viewPager .viewPagerPage .justViewPageContainer .popupText {
+	width:100%;
+	padding:20px;
+	background-color:#ddd;
+	border-radius:5px;
+	font-size:13px;
+	line-height:17px;
+}
+
+@media screen and (max-width:250px) {
+	
+	section .content .viewPager .viewPagerPage .justViewPageContainer .popupText {
+		padding:10px;
+		font-size:12px;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+	}
+}
+
+section .content .viewPager .viewPagerPage .justViewPageContainer .viewPagerButton {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:100%;
+	min-height:40px;
+	border:0;
+	border-radius:5px;
+	background-color:#09aa5c;
+	color:white;
+	font-size:17px;
+	font-weight:bold;
+	cursor:pointer;
+	transition:0.3s;
+}
+
+section .content .viewPager .viewPagerPage .justViewPageContainer .viewPagerButton:hover {
+	background-color:green;
+}
+
+section .content .viewPager .viewPagerPage .justViewPageContainer #reset {
+	background-color:#ff80c0;
+	display:none;
+}
+section .content .viewPager .viewPagerPage .justViewPageContainer #reset:hover {
+	background-color:#ee0077;
+}
+
+
+
+section .content #page1Radio:checked ~ .viewPager .viewPagerPage {
+	transform:translateX(0);
+}
+section .content #page2Radio:checked ~ .viewPager .viewPagerPage {
+	transform:translateX(-100%);
+}
+
+
+section .content #page1Radio:checked ~ .buttons #page1Button {
+	display:flex;
+}
+section .content #page2Radio:checked ~ .buttons #page2Button {
+	display:flex;
+}
+
+
+
+
+
+
+
+
+
+
+
+

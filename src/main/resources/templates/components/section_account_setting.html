@@ -1,0 +1,165 @@
+<section th:fragment="section_account_setting">
+<div class="content">
+	
+	<div class="box">
+		<div class="boxTitle">Username</div>
+		<div class="boxContent" th:text="${username}"></div>
+	</div>
+	
+	<div class="box">
+		<div class="boxTitle">Email</div>
+		<div class="boxContent" th:text="${userEmail}"></div>
+	</div>
+	
+	<div class="box">
+		<div class="boxTitle">Type</div>
+		<div class="boxContent" th:text="${userType}"></div>
+	</div>
+	
+	
+	<input type="checkbox" id="disableBtns"/>
+
+	<span class="arrowBtn" id="changePasswordBtn">
+		<span class="arrowBtnTitle">change your password</span>
+		<span class="arrow">></span>
+	</span>
+
+
+	<span class="arrowBtn" id="deleteAccountBtn">
+		<span class="arrowBtnTitle">delete your account</span>
+		<span class="arrow">></span>
+	</span>
+	
+
+	<div class="drawerWrapper">
+	
+		<input 	class="drawerOnOff" id="changePasswordDrawerOnOff" type="checkbox"/>
+		<div 	class="drawer" 		id="changePasswordDrawer">
+		
+			<div class="drawerHeader">
+				<div class="empty"></div>
+				<div class="drawerTitle">
+					<img src="/img/original/title_changePassword.png" class="drawerTitle"/>
+					<span>CHANGE PASSWORD</span>
+				</div>
+				
+				<label for="changePasswordDrawerOnOff" class="drawerCloseBtn"><img src="/img/original/close.png"/></label>
+			</div>
+		
+			
+			<div class="drawerSection">
+				<div class="drawerText">Enter your current password and new password.</div>
+			
+				<div class="drawerInputWrapper">
+					<div class="drawerInputWrapperTitle">Current password</div>
+					<input class="drawerInput" id="currentPassword" type="password" disabled>
+				</div>
+				
+				<div class="drawerInputWrapper">
+					<div class="drawerInputWrapperTitle">New password</div>
+					<input class="drawerInput" id="newPassword" type="password" disabled>
+				</div>
+				
+				<div class="drawerInputWrapper">
+					<div class="drawerInputWrapperTitle">Confirm new password</div>
+					<input class="drawerInput" id="confirmNewPassword" type="password" disabled>
+				</div>
+			</div>
+			
+			
+			<div class="drawerGuide" id="changePasswordGuide"></div>
+			
+			
+			<div class="drawerBtnWrapper">
+				<button class="drawerBtn" id="passwordSaveBtn" disabled>SAVE</button>
+			</div>
+
+		</div>
+		<label 	for="changePasswordDrawerOnOff" 	class="drawerBackground"></label>
+		
+	</div>
+	
+	
+	
+	
+	<div class="drawerWrapper">
+	
+		<input 	class="drawerOnOff" id="deleteAccountDrawerOnOff" type="checkbox"/>
+		<div 	class="drawer" 		id="deleteAccountDrawer">
+		
+			<div class="drawerHeader">
+				<div class="empty"></div>
+				<div class="drawerTitle">
+					<img src="/img/original/title_deleteAccount.png" class="drawerTitle"/>
+					<span>DELETE ACCOUNT</span>
+				</div>
+				
+				<label for="deleteAccountDrawerOnOff" class="drawerCloseBtn"><img src="/img/original/close.png"/></label>
+			</div>
+		
+			
+			<div class="drawerSection">
+				<div class="drawerText">
+					Once you enter your current password and click the 'DELETE' button, 
+					your account will be permanently deactivated. 
+					The deletion process usually takes 30 days, and you can cancel it at any time before then.
+				</div>
+			
+				
+				<div class="drawerRadioBox">
+		
+					<div class="radioWrapper" id="anonymizeRadioWrapper">
+						<div class="radioTitle">
+							<span class="radioTitleText">ANONYMIZE</span>
+							<input class="radioTitleRadio" id="anonymizeRadio" type="radio" name="wayToDeleteAccount" value="0" disabled/> 
+						</div>
+						<div class="radioContent">
+							Your account's personal information (username, email) will be deleted, 
+							and your name will be displayed as "unknown," but your posts, comments, 
+							and other contributions will remain.
+						</div>
+					</div>
+					
+					
+					<div class="radioWrapper" id="deleteRadioWrapper">
+						<div class="radioTitle">
+							<span class="radioTitleText">DELETE</span>
+							<input class="radioTitleRadio" id="deleteRadio" type="radio" name="wayToDeleteAccount" value="1" disabled/> 
+						</div>
+						<div class="radioContent">
+							Your account will be permanently deleted from THE TORTOISE'S FORGE's database, 
+							along with all your contributions, including posts and comments.
+						</div>
+					</div>
+					
+				</div>
+			
+				<div class="drawerInputWrapper">
+					<div class="drawerInputWrapperTitle">Current password</div>
+					<input class="drawerInput" id="userPassword" type="password" disabled>
+				</div>
+			</div>
+			
+			
+			<div class="drawerGuide" id="deleteAccountGuide"></div>
+			
+			
+			<div class="drawerBtnWrapper">
+				<button class="drawerDeleteBtn" id="accountDeleteBtn" disabled>DELETE</button>
+			</div>
+
+		</div>
+		<label 	for="deleteAccountDrawerOnOff" 	class="drawerBackground"></label>
+		
+	</div>
+	
+	
+	<div class="modalBackground" id="modalBackground">
+		<div class="modal">
+			<span class="modalText">waiting..</span>
+			<img class="modalImage" src="/img/mini/progressCircle_mini.png"/>
+		</div>
+	</div>
+
+</div>
+</section>
